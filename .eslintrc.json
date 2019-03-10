@@ -1,0 +1,9 @@
+{
+    "extends": "react-app",
+    "globals": {
+        "shallow": "readonly"
+    },
+    "rules": {
+        "indent": ["error", 4]
+    }
+}
