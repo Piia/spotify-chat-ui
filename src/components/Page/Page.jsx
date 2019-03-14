@@ -12,11 +12,6 @@ const BasicText = styled.p`
 
 
 class Page extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         if(!this.props.loggedIn) {
             return <div>Logging in (i wanna be a spinner)...</div>;
