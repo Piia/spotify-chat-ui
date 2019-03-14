@@ -1,24 +1,13 @@
-import { createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk';
 
-export const ACTIONS = {
-    LOG_IN: 'LOG_IN'
-}
-
-function todos(state = {}, action) {
-    switch (action.type) {
-      case ACTIONS.LOG_IN:
-        return {
-            ...state,
-            loggedIn: true
-        }
-      default:
-        return state
-    }
-  }
+import { loginReducer } from 'redux/login/login';
+import { profileReducer } from 'redux/profile/profile';
 
 
-const initialState = {
-    loggedIn: false
-}
+const rootReducer = combineReducers({
+  login: loginReducer, 
+  profile: profileReducer
+});
 
-export const store = createStore(todos, initialState)
+export const store = createStore(rootReducer, applyMiddleware(thunk));

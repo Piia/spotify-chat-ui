@@ -27,6 +27,6 @@ class Page extends Component {
 }
 
 
-const mapStateToProps = state => ({'loggedIn': state.loggedIn});
+const mapStateToProps = state => ({'loggedIn': state.login.loggedIn});
 
 export default connect(mapStateToProps)(Page);

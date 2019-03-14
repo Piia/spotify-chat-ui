@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { store, ACTIONS } from 'redux/Store';
+import { connect } from 'react-redux';
 
-import SpotifyClient from 'spotify_client/SpotifyClient'
+import { login } from 'redux/login/login';
 
 
 class LoginLandingPage extends Component {
-    constructor(props) {
-        super(props)
-    }
-
     componentDidMount() {
-        SpotifyClient.postAuthenticate(this.props.authorizationCode).then(tokenLifeTime => {
-            store.dispatch( { type: ACTIONS.LOG_IN } )
+        this.props.login(this.props.authorizationCode).then(() => {
             const mainPageUrl = "/chat";
             this.props.history.push(mainPageUrl);
         });
@@ -21,7 +16,10 @@ class LoginLandingPage extends Component {
     render() {
         return (<div>Logging in...</div>);
     }
-
 }
 
-export default withRouter(LoginLandingPage);
+const mapDispatchToProps = dispatch => ({
+    login: (authorizationCode) => dispatch(login(authorizationCode))
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(LoginLandingPage));
