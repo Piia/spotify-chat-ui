@@ -2,9 +2,12 @@ import React from 'react';
 import Page from './Page';
 
 describe('Page', () => {
-    let component;
+    let component, props;
     beforeEach(() => {
-        component = shallow(<Page />);
+        props = {
+            loggedIn: true,
+        };
+        component = shallow(<Page { ...props } />);
     });
 
     it('should render component', () => {

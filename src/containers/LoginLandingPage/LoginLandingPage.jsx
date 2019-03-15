@@ -1,22 +1,33 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
+import SpinnerPage from 'components/Spinner/SpinnerPage';
 import { login } from 'redux/login/login';
 
 
-class LoginLandingPage extends Component {
+export class LoginLandingPage extends PureComponent {
     componentDidMount() {
-        this.props.login(this.props.authorizationCode).then(() => {
-            const mainPageUrl = "/chat";
-            this.props.history.push(mainPageUrl);
-        });
+        const { login, authorizationCode, history } = this.props;
+
+        login(authorizationCode)
+            .then(() => {
+                const mainPageUrl = "/chat";
+                history.push(mainPageUrl);
+            });
     }
 
     render() {
-        return (<div>Logging in...</div>);
+        return <SpinnerPage />;
     }
 }
+
+LoginLandingPage.propTypes = {
+    login: PropTypes.func.isRequired,
+    authorizationCode: PropTypes.string.isRequired,
+    history: PropTypes.object.isRequired,
+};
 
 const mapDispatchToProps = dispatch => ({
     login: (authorizationCode) => dispatch(login(authorizationCode))

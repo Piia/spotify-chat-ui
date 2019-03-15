@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types';
 
 const BasicText = styled.p`
     font-family: ${props => props.theme.font.family.georgia};
@@ -10,10 +9,12 @@ const BasicText = styled.p`
     color: ${props => props.theme.colors.voodoo};
 `;
 
+class Page extends PureComponent {
 
-class Page extends Component {
     render() {
-        if(!this.props.loggedIn) {
+        const { loggedIn } = this.props;
+
+        if(!loggedIn) {
             return <div>Logging in (i wanna be a spinner)...</div>;
         } else {
             return <BasicText>Hello Page!</BasicText>;
@@ -21,7 +22,8 @@ class Page extends Component {
     }
 }
 
+Page.propTypes = {
+    loggedIn: PropTypes.bool.isRequired,
+};
 
-const mapStateToProps = state => ({'loggedIn': state.login.loggedIn});
-
-export default connect(mapStateToProps)(Page);
+export default Page;

@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const Navigation = styled.nav`
@@ -29,17 +29,22 @@ NavItem.displayName = 'NavItem';
 class NavBar extends PureComponent {
     render() {
         const { profile } = this.props;
+
         return (
             <Navigation>
                 <NavList>
                     <NavItem>Link 1</NavItem>
                     <NavItem>Link 2</NavItem>
-                    <NavItem right>{profile&&profile.displayName}</NavItem>
+                    <NavItem right>{ profile && profile.displayName }</NavItem>
                 </NavList>
             </Navigation>
         );
     }
 }
+
+NavBar.propTypes = {
+    profile: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = state => ({
     profile: state.profile.profileData
