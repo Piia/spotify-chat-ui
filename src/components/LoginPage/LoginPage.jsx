@@ -7,7 +7,7 @@ const LinkBackground = styled.section`
     align-items: center;
     width: 10em;
     height: 7em;
-    margin: 10vh auto auto;
+    margin: 15vh auto auto;
     background-color: ${props => props.theme.colors.strikemaster};
 `;
 LinkBackground.displayName = 'LinkBackground'
