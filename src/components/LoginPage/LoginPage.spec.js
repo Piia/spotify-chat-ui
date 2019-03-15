@@ -11,7 +11,12 @@ describe('LoginPage', () => {
         expect(component).toExist();
     });
 
+    it('should render link backrgound', () => {
+        expect(component.find('LinkBackground')).toExist();
+    });
+
     it('should render link', () => {
         expect(component.find('LoginLink')).toExist();
+        expect(component.find('LoginLink').children().text()).toEqual('Log in');
     });
 });
