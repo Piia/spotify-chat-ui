@@ -1,32 +1,28 @@
 import SpotifyClient from 'spotify_client/SpotifyClient';
 
 
-export function login(authorizationCode) {
-    return function(dispatch, getState) {
-        return SpotifyClient.postAuthenticate(authorizationCode).then( tokenLifeTime => {
-            dispatch( { type: ACTIONS.LOG_IN } )
-        });
-    };
-}
-
-
-export const ACTIONS = {
-    LOG_IN: 'LOG_IN'
+const initialState = {
+    loggedIn: false,
 };
 
-const initialState = {
-    loggedIn: false
-}
+const LOG_IN_SUCCESS = 'login/LOG_IN_SUCCESS';
 
-export function loginReducer(state = initialState, action) {
-    switch (action.type) {
-      case ACTIONS.LOG_IN:
-        return {
-            ...state,
-            loggedIn: true
-        }
-      default:
-        return state
-    }
-  }
+export const login = authorizationCode => {
+    return dispatch => {
+        return SpotifyClient.postAuthenticate(authorizationCode)
+            .then(tokenLifeTime => {
+                dispatch({
+                    type: LOG_IN_SUCCESS,
+                    tokenLifeTime
+                });
+            });
+    };
+};
+
+export const loginReducer = (state = initialState, action) => ({
+    [LOG_IN_SUCCESS]: ({
+        ...state,
+        loggedIn: true,
+    }),
+})[action.type] || state;
 

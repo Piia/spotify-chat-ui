@@ -6,8 +6,8 @@ import { profileReducer } from 'redux/profile/profile';
 
 
 const rootReducer = combineReducers({
-  login: loginReducer, 
-  profile: profileReducer
+    login: loginReducer, 
+    profile: profileReducer
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
