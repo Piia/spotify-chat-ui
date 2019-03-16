@@ -2,7 +2,7 @@ import SpotifyClient from 'spotify_client/SpotifyClient';
 
 
 const initialState = {
-    profileData: null
+    profileData: {}
 }
 
 

@@ -10,6 +10,7 @@ import MainPage from 'containers/MainPage/MainPage';
 import { theme } from 'styles/theme';
 import GlobalStyle from 'styles/global';
 
+import AuthenticatedRoute from 'containers/AuthenticatedRoute/AuthenticatedRoute';
 
 class Application extends PureComponent {
     
@@ -27,7 +28,7 @@ class Application extends PureComponent {
                         <Router>
                             <div>
                                 <Route exact path="/" component={LoginPage} />
-                                <Route path="/chat" component={MainPage} />
+                                <AuthenticatedRoute path="/chat" component={MainPage} />
                                 <Route path="/callback/spotify-auth" render={(props) => <LoginLandingPage {...props} authorizationCode={this.getAuthorizationCode()} />} />
                             </div>
                         </Router>
