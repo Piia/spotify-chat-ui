@@ -15,6 +15,14 @@ class SpotifyClient {
         });
     }
 
+    static getAccessTokenLifetime() {
+        return axios.get(`${process.env.REACT_APP_BACKEND_BASEPATH}/accessToken/lifeTime`);
+    }
+
+    static postAccessTokenRefresh() {
+        return axios.post(`${process.env.REACT_APP_BACKEND_BASEPATH}/accessToken/refresh`);
+    }
+
     static searchTracks(trackName) {
         return axios.get(`${process.env.REACT_APP_BACKEND_BASEPATH}/search/track`, {
             params: { name: trackName }
