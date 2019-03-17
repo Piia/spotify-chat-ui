@@ -46,7 +46,7 @@ export const searchReducer = (state = initialState, action) => ({
     }),
     [SEARCH_TRACKS_SUCCESS]: ({
         ...state,
-        tracks: action.result,
+        tracks: action.result ? action.result.items : [],
         loading: false,
         error: {},
     }),
