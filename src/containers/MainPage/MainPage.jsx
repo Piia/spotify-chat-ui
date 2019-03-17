@@ -2,12 +2,18 @@ import React, { PureComponent, Fragment } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import Page from 'components/Page/Page';
+import Chat from 'components/Chat/Chat';
 import NavBar from 'containers/NavBar/NavBar';
+import SearchPanel from 'containers/SearchPanel/SearchPanel';
 
 import { loadProfile } from 'redux/profile/profile';
 
+const MainContent = styled.section`
+    display: flex;
+`;
+MainContent.displayName = 'MainContent';
 
 export class MainPage extends PureComponent {
 
@@ -16,29 +22,25 @@ export class MainPage extends PureComponent {
     }
 
     render() {
-        const { loggedIn } = this.props;
-
         return (
             <Fragment>
                 <NavBar />
-                <Page loggedIn={loggedIn} />
+                <MainContent>
+                    <SearchPanel />
+                    <Chat />
+                </MainContent>
             </Fragment>
         );
     }
 }
 
 MainPage.propTypes = {
-    loggedIn: PropTypes.bool.isRequired,
     loadProfile: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
-    loggedIn: state.login.loggedIn
-});
 const mapDispatchToProps = dispatch => ({
     loadProfile: () => dispatch(loadProfile())
 });
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
+const connector = connect(null, mapDispatchToProps);
 
 export default connector(withRouter(MainPage));
