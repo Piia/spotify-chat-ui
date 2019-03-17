@@ -9,7 +9,7 @@ const Item = styled.li`
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
-    padding: ${props => props.theme.spacing.xs};
+    padding: ${props => props.theme.spacing.xxs};
     transition: background-color 0.1s ease-out;
 
     &:hover {
@@ -47,7 +47,7 @@ const TrackItem = ({ imageUrl, title, text }) => {
 
     return (
         <Item>
-            <Image url={ imageUrl } width={ 20 } height={ 20 } />
+            <Image url={ imageUrl } width={ 64 } height={ 64 } />
             <TrackInfo>
                 <Title>{ title }</Title>
                 <Text>{ text }</Text>

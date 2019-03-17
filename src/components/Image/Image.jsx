@@ -22,7 +22,7 @@ const Image = ({ url, width, height }) => {
     if (!url) {
         return <Placeholder width={ width } height={ height } />
     }
-    return <StyledImage href={ url } width={ width } height={ height } />
+    return <StyledImage src={ url } width={ width } height={ height } />
 };
 
 Image.defaultProps = {
