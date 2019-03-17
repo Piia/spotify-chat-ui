@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import Page from 'components/Page/Page';
 import NavBar from 'containers/NavBar/NavBar';
+import SearchPanel from 'containers/SearchPanel/SearchPanel';
 
 import { loadProfile } from 'redux/profile/profile';
 
@@ -21,6 +22,7 @@ export class MainPage extends PureComponent {
         return (
             <Fragment>
                 <NavBar />
+                <SearchPanel />
                 <Page loggedIn={loggedIn} />
             </Fragment>
         );

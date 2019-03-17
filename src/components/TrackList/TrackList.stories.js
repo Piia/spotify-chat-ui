@@ -17,12 +17,12 @@ storiesOf('TrackList', module)
     ))
     .add('withTestData', () => (
         <TrackList>
-        {trackSearchResults.items.map( (searchResult, i) => (
-            <TrackItem 
-                key={i} 
-                imageUrl={searchResult.album.images[2].url} 
-                title={searchResult.name} 
-                text={searchResult.album.name} />
-        ))}
+            {trackSearchResults.items.map( (searchResult, i) => (
+                <TrackItem 
+                    key={i} 
+                    imageUrl={searchResult.album.images[2].url} 
+                    title={searchResult.name} 
+                    text={searchResult.album.name} />
+            ))}
         </TrackList>
     ));
