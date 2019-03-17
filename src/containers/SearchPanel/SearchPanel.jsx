@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,6 +10,13 @@ import SearchBar from 'components/SearchBar/SearchBar';
 
 import { searchTracks } from 'redux/search/search';
 
+const Panel = styled.aside`
+    flex-flow: column nowrap;
+    width: 20em;
+    background-color: ${props => props.theme.colors.goblin};
+    padding: ${props => props.theme.spacing.md};
+`;
+Panel.displayName = 'Panel';
 
 class SearchPanel extends PureComponent {
 
@@ -26,10 +33,10 @@ class SearchPanel extends PureComponent {
         }
 
         return (
-            <Fragment>
+            <Panel>
                 <SearchBar onSearch={ this.handleSearch } />
                 <SearchResult tracks={ tracks } />
-            </Fragment>
+            </Panel>
         );
     }
 }

@@ -1,6 +1,8 @@
 import React from 'react';
 import { MainPage } from './MainPage';
 import NavBar from 'containers/NavBar/NavBar';
+import Chat from 'components/Chat/Chat';
+import SearchPanel from 'containers/SearchPanel/SearchPanel';
 
 describe('MainPage', () => {
     let component, props;
@@ -19,5 +21,13 @@ describe('MainPage', () => {
 
     it('should render NavBar', () => {
         expect(component.find(NavBar)).toExist();
+    });
+
+    it('should render SearchPanel', () => {
+        expect(component.find(SearchPanel)).toExist();
+    });
+
+    it('should render Chat', () => {
+        expect(component.find(Chat)).toExist();
     });
 });
