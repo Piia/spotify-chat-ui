@@ -1,0 +1,21 @@
+{
+    "birthdate": null,
+    "country": null,
+    "displayName": "fakeuser",
+    "email": "fake.user@fakemail.com",
+    "externalUrls": {
+        "externalUrls": {
+            "spotify": "https://open.spotify.com/user/fakeuser"
+        }
+    },
+    "followers": {
+        "href": null,
+        "total": 1
+    },
+    "href": "https://api.spotify.com/v1/users/fakeuser",
+    "id": "fakeuser",
+    "images": [],
+    "product": null,
+    "type": "USER",
+    "uri": "spotify:user:fakeuser"
+}
