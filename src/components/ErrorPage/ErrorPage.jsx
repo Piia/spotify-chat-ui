@@ -6,7 +6,7 @@ const ErrorText = styled.p`
     font-family: ${props => props.theme.font.family.georgia};
     font-size: ${props => props.theme.font.size.md};
     font-weight: ${props => props.theme.font.weight.normal};
-    color: ${props => props.theme.colors.voodoo};
+    color: ${props => props.theme.colors.magnolia};
 `;
 ErrorText.displayName = 'ErrorText';
 
