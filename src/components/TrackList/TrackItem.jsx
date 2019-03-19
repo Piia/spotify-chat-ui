@@ -4,6 +4,22 @@ import PropTypes from 'prop-types';
 
 import Image from 'components/Image/Image';
 
+const PlayButton = styled.div`
+    width: 1px;
+    height: 1px;
+    border: 15px solid transparent;
+    border-left-color: ${props => props.theme.colors.varden};
+    margin-left: auto;
+    transition: transform, border-left-color 0.1s ease-in-out;
+
+    &:hover {
+        transform: scale(1.2);
+        border-left-color: ${props => props.theme.colors.leather};
+        cursor: pointer;
+    }
+`;
+PlayButton.displayName = 'PlayButton';
+
 const Item = styled.li`
     display: flex;
     flex-flow: row nowrap;
@@ -43,7 +59,7 @@ const Text = styled.span`
 Text.displayName = 'Text';
 
 
-const TrackItem = ({ imageUrl, title, text }) => {
+const TrackItem = ({ imageUrl, title, text, onPlay }) => {
 
     return (
         <Item>
@@ -52,6 +68,7 @@ const TrackItem = ({ imageUrl, title, text }) => {
                 <Title>{ title }</Title>
                 <Text>{ text }</Text>
             </TrackInfo>
+            { typeof onPlay === 'function' && <PlayButton onClick={ onPlay } /> }
         </Item>
     );
 };
@@ -60,12 +77,14 @@ TrackItem.defaultProps = {
     imageUrl: null,
     title: '',
     text: '',
+    onPlay: null,
 };
 
 TrackItem.propTypes = {
     imageUrl: PropTypes.string,
     title: PropTypes.string,
     text: PropTypes.string,
+    onPlay: PropTypes.func,
 };
 
 export default TrackItem;
