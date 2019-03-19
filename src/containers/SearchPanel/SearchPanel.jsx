@@ -14,6 +14,8 @@ import { playTrack } from 'redux/playback/playback';
 const Panel = styled.aside`
     flex-flow: column nowrap;
     width: 20em;
+    height: 30em;
+    overflow-y: scroll;
     background-color: ${props => props.theme.colors.goblin};
     padding: ${props => props.theme.spacing.md};
 `;
