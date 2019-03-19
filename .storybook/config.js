@@ -1,4 +1,4 @@
-import { configure, addDecorator } from '@storybook/react';
+import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs/react';
 import { withThemesProvider } from 'storybook-addon-styled-component-theme';
 import { theme } from 'styles/theme';
@@ -7,6 +7,13 @@ import { theme } from 'styles/theme';
 
 addDecorator(withThemesProvider([theme]));
 addDecorator(withKnobs);
+
+addParameters({
+    options: {
+        showPanel: true,
+        panelPosition: 'bottom',
+    }
+});
 
 function loadStories() {
   const req = require.context('../src/components', true, /\.stories\.js$/);
