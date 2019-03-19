@@ -3,7 +3,10 @@ import styled from 'styled-components';
 import Spinner from './Spinner';
 
 const Container = styled.div`
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20vh auto auto;
 `;
 
 const SpinnerPage = () =>
