@@ -2,9 +2,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import TrackList from './TrackList';
 import TrackItem from './TrackItem';
-
-
-const trackSearchResults = require('test_data/track_search_results.json');
+import { tracks } from 'test_data/tracks';
 
 
 storiesOf('TrackList', module)
@@ -17,7 +15,7 @@ storiesOf('TrackList', module)
     ))
     .add('withTestData', () => (
         <TrackList>
-            {trackSearchResults.items.map( (searchResult, i) => (
+            {tracks.map( (searchResult, i) => (
                 <TrackItem 
                     key={i} 
                     imageUrl={searchResult.album.images[2].url} 
