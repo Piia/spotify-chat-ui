@@ -9,6 +9,7 @@ import SearchResult from 'components/SearchResult/SearchResult';
 import SearchBar from 'components/SearchBar/SearchBar';
 
 import { searchTracks } from 'redux/search/search';
+import { playTrack } from 'redux/playback/playback';
 
 const Panel = styled.aside`
     flex-flow: column nowrap;
@@ -23,7 +24,7 @@ class SearchPanel extends PureComponent {
     handleSearch = trackName => this.props.searchTracks(trackName);
 
     render() {
-        const { tracks, loading, error } = this.props;
+        const { tracks, loading, error, playTrack } = this.props;
 
         if (loading) {
             return <Spinner />;
@@ -35,7 +36,7 @@ class SearchPanel extends PureComponent {
         return (
             <Panel>
                 <SearchBar onSearch={ this.handleSearch } />
-                <SearchResult tracks={ tracks } />
+                <SearchResult tracks={ tracks } onPlay={ playTrack } />
             </Panel>
         );
     }
@@ -45,6 +46,8 @@ SearchPanel.propTypes = {
     tracks: PropTypes.array.isRequired,
     loading: PropTypes.bool.isRequired,
     error: PropTypes.object.isRequired,
+    searchTracks: PropTypes.func.isRequired,
+    playTrack: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -55,6 +58,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     searchTracks: trackName => dispatch(searchTracks(trackName)),
+    playTrack: trackUri => dispatch(playTrack(trackUri)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

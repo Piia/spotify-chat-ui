@@ -6,7 +6,7 @@ import Spinner from 'components/Spinner/Spinner';
 
 const IMAGE_URL_ORDER = 2;
 
-const SearchResult = ({ tracks, loading }) => {
+const SearchResult = ({ tracks, loading, onPlay }) => {
     return (
         <TrackList>
             { loading
@@ -25,6 +25,7 @@ const SearchResult = ({ tracks, loading }) => {
                                 : null } 
                             title={ track.name } 
                             text={ track.album.name }
+                            onPlay={ () => onPlay(track.uri) }
                         />
                     );
                 }) }
@@ -38,6 +39,7 @@ SearchResult.defaultProps = {
 
 SearchResult.propTypes = {
     tracks: PropTypes.array.isRequired,
+    onPlay: PropTypes.func.isRequired,
     loading:PropTypes.bool,
 };
 
