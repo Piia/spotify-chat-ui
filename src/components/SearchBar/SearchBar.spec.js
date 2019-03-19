@@ -3,9 +3,13 @@ import SearchBar from './SearchBar';
 import SearchInput from 'components/Inputs/SearchInput';
 
 describe('SearchBar', () => {
-    let component;
+    let component, props;
+
     beforeEach(() => {
-        component = shallow(<SearchBar onSearch={ () => {} } />);
+        props = {
+            onSearch: spy(),
+        };
+        component = shallow(<SearchBar { ...props } />);
     });
 
     it('should render component', () => {
@@ -27,7 +31,7 @@ describe('SearchBar', () => {
         expect(passedProps.model).toBeDefined();
     });
 
-    describe('when onChange is called', () => {
+    describe('when handleChange is called', () => {
         let property, value;
 
         beforeEach(() => {
@@ -38,6 +42,26 @@ describe('SearchBar', () => {
 
         it('should change state', () => {
             expect(component.state().model[property]).toEqual(value);
+        });
+    });
+
+    describe('when handleKeyPress is called', () => {
+        let property, value;
+
+        beforeEach(() => {
+            property = component.instance().property;
+            value = 'ghjk'
+            component.setState({ model: { [property]: value } })
+            component.find(SearchInput).props().onKeyPress();
+            component.find(SearchInput).props().onKeyPress({ key: 'Enter' });
+        });
+
+        it('should call onSearch', () => {
+            expect(props.onSearch.calledOnce).toBe(true);
+        });
+
+        it('should pass correct arguments', () => {
+            expect(props.onSearch.firstCall.args[0]).toEqual(component.state().model[property]);
         });
     });
 });

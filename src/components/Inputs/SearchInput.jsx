@@ -14,12 +14,13 @@ const Input = styled.input`
     appearance: none;
 `;
 
-const SearchInput = ({ model, property, onChange, placeholder, disabled }) => {
+const SearchInput = ({ model, property, onChange, onKeyPress, placeholder, disabled }) => {
 
     return (
         <Input
             value={ model && property && model.property }
             onChange={ (event) => onChange(property, event.target.value) }
+            onKeyPress={ onKeyPress }
             placeholder={ placeholder }
             disabled={ disabled }
         />
@@ -29,12 +30,14 @@ const SearchInput = ({ model, property, onChange, placeholder, disabled }) => {
 SearchInput.defaultProps = {
     placeholder: '...',
     disabled: false,
+    onKeyPress: undefined,
 };
 
 SearchInput.propTypes = {
     model: PropTypes.object.isRequired,
     property: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
+    onKeyPress: PropTypes.func,
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
 }

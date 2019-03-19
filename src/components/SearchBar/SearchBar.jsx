@@ -23,8 +23,16 @@ class SearchBar extends PureComponent {
         model: {}
     };
 
+    property = 'trackName';
+
     handleInputChange = (property, value) => {
         this.setState(oldState => ({ model: { ...oldState.model, [property]: value } }))
+    };
+
+    handleKeyPress = event => {
+        if (event && event.key === 'Enter') {
+            this.props.onSearch(this.state.model[this.property])
+        };
     };
 
     render() {
@@ -33,7 +41,8 @@ class SearchBar extends PureComponent {
                 <Label>Search tracks</Label>
                 <SearchInput
                     onChange={ this.handleInputChange }
-                    property="trackName"
+                    onKeyPress={ this.handleKeyPress }
+                    property={ this.property }
                     model={ this.state.model }
                 />
             </Bar>
