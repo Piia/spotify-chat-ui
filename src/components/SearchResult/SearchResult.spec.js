@@ -5,9 +5,13 @@ import TrackItem from 'components/TrackList/TrackItem';
 import { tracks } from 'test_data/tracks';
 
 describe('SearchResult', () => {
-    let component;
+    let component, props;
     beforeEach(() => {
-        component = shallow(<SearchResult tracks={ tracks } />);
+        props = {
+            onPlay: spy(),
+            tracks
+        };
+        component = shallow(<SearchResult { ...props } />);
     });
 
     it('should render component', () => {

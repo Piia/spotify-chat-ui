@@ -8,15 +8,20 @@ const Bar = styled.div`
 `;
 Bar.displayName = 'Bar';
 
-const Label = styled.label`
-    display: block;
+const Search = styled.span`
     padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.md};
     font-family: ${props => props.theme.font.family.verdana};
     font-size: ${props => props.theme.font.size.sm};
     font-weight: ${props => props.theme.font.weight.normal};
     color: ${props => props.theme.colors.varden};
+    transition: color 0.1s ease-in-out;
+
+    &:hover {
+        color: ${props => props.theme.colors.leather};
+        cursor: pointer;
+    }
 `;
-Label.displayName = 'Label';
+Search.displayName = 'Search';
 
 class SearchBar extends PureComponent {
     state = {
@@ -31,20 +36,23 @@ class SearchBar extends PureComponent {
 
     handleKeyPress = event => {
         if (event && event.key === 'Enter') {
-            this.props.onSearch(this.state.model[this.property])
+            this.submitSearch();
         };
     };
+
+    submitSearch = () => this.props.onSearch(this.state.model[this.property]);
 
     render() {
         return (
             <Bar>
-                <Label>Search tracks</Label>
                 <SearchInput
                     onChange={ this.handleInputChange }
                     onKeyPress={ this.handleKeyPress }
                     property={ this.property }
                     model={ this.state.model }
+                    placeholder="Search tracks"
                 />
+                <Search onClick={ this.submitSearch }>Search</Search>
             </Bar>
         );
     };
