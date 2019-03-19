@@ -29,6 +29,10 @@ class SpotifyClient {
         });
     }
 
+    static playTrack(trackUri) {
+        return axios.put(`${process.env.REACT_APP_BACKEND_BASEPATH}/play/track/${trackUri}`);
+    }
+
 }
 
 export default SpotifyClient;
