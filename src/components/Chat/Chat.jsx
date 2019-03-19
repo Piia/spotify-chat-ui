@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-// import PropTypes from 'prop-types';
 
 const Container = styled.article`
     padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.xl};
@@ -11,7 +10,7 @@ const BasicText = styled.p`
     font-family: ${props => props.theme.font.family.georgia};
     font-size: ${props => props.theme.font.size.md};
     font-weight: ${props => props.theme.font.weight.normal};
-    color: ${props => props.theme.colors.verda};
+    color: ${props => props.theme.colors.magnolia};
 `;
 
 class Chat extends PureComponent {
