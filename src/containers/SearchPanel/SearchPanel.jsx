@@ -22,9 +22,6 @@ class SearchPanel extends PureComponent {
     render() {
         const { tracks, loading, error, playTrack, searchTracks } = this.props;
 
-        if (loading) {
-            return <Spinner />;
-        }
         if (error && Object.keys(error).length > 0) {
             return <ErrorPage message={ error.message || error } />
         }
@@ -32,7 +29,7 @@ class SearchPanel extends PureComponent {
         return (
             <Panel>
                 <SearchBar onSearch={ searchTracks } />
-                <SearchResult tracks={ tracks } onPlay={ playTrack } />
+                <SearchResult tracks={ tracks } onPlay={ playTrack } loading={ loading } />
             </Panel>
         );
     }
