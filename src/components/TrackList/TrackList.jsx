@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const TrackList = styled.ul`
     background-color: ${props => props.theme.colors.goblin};
+    height: 65vh;
     overflow-y: scroll;
 `;
 TrackList.displayName = 'TrackList';
