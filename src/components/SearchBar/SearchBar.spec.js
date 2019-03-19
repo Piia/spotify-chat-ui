@@ -16,11 +16,11 @@ describe('SearchBar', () => {
         expect(component).toExist();
     });
 
-    it('should render label', () => {
-        expect(component.find('Label')).toExist();
+    it('should render Search', () => {
+        expect(component.find('Search')).toExist();
     });
 
-    it('should render input', () => {
+    it('should render SearchInput', () => {
         expect(component.find(SearchInput)).toExist();
     });
 
@@ -54,6 +54,25 @@ describe('SearchBar', () => {
             component.setState({ model: { [property]: value } })
             component.find(SearchInput).props().onKeyPress();
             component.find(SearchInput).props().onKeyPress({ key: 'Enter' });
+        });
+
+        it('should call onSearch', () => {
+            expect(props.onSearch.calledOnce).toBe(true);
+        });
+
+        it('should pass correct arguments', () => {
+            expect(props.onSearch.firstCall.args[0]).toEqual(component.state().model[property]);
+        });
+    });
+
+    describe('when onClick is called', () => {
+        let property, value;
+
+        beforeEach(() => {
+            property = component.instance().property;
+            value = 'ghjk'
+            component.setState({ model: { [property]: value } })
+            component.find('Search').props().onClick();
         });
 
         it('should call onSearch', () => {
