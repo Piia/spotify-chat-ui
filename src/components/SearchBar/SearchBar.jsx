@@ -40,7 +40,12 @@ class SearchBar extends PureComponent {
         };
     };
 
-    submitSearch = () => this.props.onSearch(this.state.model[this.property]);
+    submitSearch = () => {
+        const searchWord = this.state.model[this.property];
+        if (searchWord && searchWord.length > 0) {
+            this.props.onSearch(searchWord);
+        };
+    };
 
     render() {
         return (

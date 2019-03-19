@@ -20,11 +20,8 @@ const Panel = styled.aside`
 Panel.displayName = 'Panel';
 
 class SearchPanel extends PureComponent {
-
-    handleSearch = trackName => this.props.searchTracks(trackName);
-
     render() {
-        const { tracks, loading, error, playTrack } = this.props;
+        const { tracks, loading, error, playTrack, searchTracks } = this.props;
 
         if (loading) {
             return <Spinner />;
@@ -35,7 +32,7 @@ class SearchPanel extends PureComponent {
 
         return (
             <Panel>
-                <SearchBar onSearch={ this.handleSearch } />
+                <SearchBar onSearch={ searchTracks } />
                 <SearchResult tracks={ tracks } onPlay={ playTrack } />
             </Panel>
         );
