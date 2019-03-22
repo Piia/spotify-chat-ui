@@ -1,12 +1,23 @@
 import { configure, addDecorator, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs/react';
-import { withThemesProvider } from 'storybook-addon-styled-component-theme';
+import React, { Fragment } from 'react';
+
+import { ThemeProvider } from 'styled-components';
 import { theme } from 'styles/theme';
+import GlobalStyle from 'styles/global';
 
 // https://dzone.com/articles/practical-guide-to-storybook-driven-development
 
-addDecorator(withThemesProvider([theme]));
+addDecorator(story => (
+    <ThemeProvider theme={ theme }>
+        <Fragment>
+            <GlobalStyle />
+            { story() }
+        </Fragment>
+    </ThemeProvider>
+));
 addDecorator(withKnobs);
+
 
 addParameters({
     options: {
