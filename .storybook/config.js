@@ -21,7 +21,7 @@ addDecorator(withKnobs);
 
 addParameters({
     options: {
-        showPanel: true,
+        showPanel: false,
         panelPosition: 'bottom',
     }
 });
