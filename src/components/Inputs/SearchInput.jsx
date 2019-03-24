@@ -15,6 +15,11 @@ const Input = styled.input`
     border-radius: 2em;
     border: none;
     appearance: none;
+    
+    &:focus {
+        outline: none;
+        border: 1px solid ${props => props.theme.colors.varden};
+    }
 `;
 
 const SearchInput = ({ model, property, onChange, onKeyPress, placeholder, disabled }) => {
@@ -26,6 +31,7 @@ const SearchInput = ({ model, property, onChange, onKeyPress, placeholder, disab
             onKeyPress={ onKeyPress }
             placeholder={ placeholder }
             disabled={ disabled }
+            spellCheck="false"
         />
     );
 }
