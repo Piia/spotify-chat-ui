@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const Input = styled.input`
+    box-sizing: border-box;
+    width: 100%;
     background-color: ${props => props.theme.colors.outerSpace};
     font-family: ${props => props.theme.font.family.georgia};
     font-size: ${props => props.theme.font.size.sm};
     font-weight: ${props => props.theme.font.weight.normal};
+    line-height: 1.5;
     color: ${props => props.theme.colors.varden};
     padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.md};
     border-radius: 2em;

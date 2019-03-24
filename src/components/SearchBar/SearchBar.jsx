@@ -4,16 +4,26 @@ import styled from 'styled-components';
 import SearchInput from 'components/Inputs/SearchInput';
 
 const Bar = styled.div`
-    padding: ${props => props.theme.spacing.md} 0;
+    position: relative;
+    padding: ${props => props.theme.spacing.md};
+
+    & > input {
+        padding: ${props => props.theme.spacing.xs} 65px ${props => props.theme.spacing.xs} ${props => props.theme.spacing.md};
+    }
 `;
 Bar.displayName = 'Bar';
 
 const Search = styled.span`
-    padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.md};
+    position: absolute;
+    top: calc(${props => props.theme.spacing.lg} + 4px);
+    right: ${props => props.theme.spacing.xl};
+
     font-family: ${props => props.theme.font.family.verdana};
-    font-size: ${props => props.theme.font.size.sm};
+    font-size: ${props => props.theme.font.size.xs};
     font-weight: ${props => props.theme.font.weight.normal};
+    line-height: 1.5;
     color: ${props => props.theme.colors.varden};
+    text-transform: uppercase;
     transition: color 0.1s ease-in-out;
 
     &:hover {
