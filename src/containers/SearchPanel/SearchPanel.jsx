@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Spinner from 'components/Spinner/Spinner';
-import ErrorPage from 'components/ErrorPage/ErrorPage';
 import SearchResult from 'components/SearchResult/SearchResult';
 import SearchBar from 'components/SearchBar/SearchBar';
 
@@ -22,14 +20,15 @@ class SearchPanel extends PureComponent {
     render() {
         const { tracks, loading, error, playTrack, searchTracks } = this.props;
 
-        if (error && Object.keys(error).length > 0) {
-            return <ErrorPage message={ error.message || error } />
-        }
-
         return (
             <Panel>
                 <SearchBar onSearch={ searchTracks } />
-                <SearchResult tracks={ tracks } onPlay={ playTrack } loading={ loading } />
+                <SearchResult
+                    tracks={ tracks }
+                    onPlay={ playTrack }
+                    loading={ loading }
+                    error={ error }
+                />
             </Panel>
         );
     }

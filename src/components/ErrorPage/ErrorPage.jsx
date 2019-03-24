@@ -7,6 +7,7 @@ const ErrorText = styled.p`
     font-size: ${props => props.theme.font.size.md};
     font-weight: ${props => props.theme.font.weight.normal};
     color: ${props => props.theme.colors.magnolia};
+    padding: ${props => props.theme.spacing.md};
 `;
 ErrorText.displayName = 'ErrorText';
 

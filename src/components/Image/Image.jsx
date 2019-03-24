@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 const StyledImage = styled.img`
     width: ${props => props.width};
     height: ${props => props.height};
-    margin: ${props => props.theme.spacing.xs};
 `;
 StyledImage.displayName = 'StyledImage';
 
@@ -14,7 +13,6 @@ const Placeholder = styled.div`
     width: ${props => props.width}px;
     height: ${props => props.height}px;
     background-color: ${props => props.theme.colors.leather};
-    margin: ${props => props.theme.spacing.xs};
 `;
 Placeholder.displayName = 'Placeholder';
 

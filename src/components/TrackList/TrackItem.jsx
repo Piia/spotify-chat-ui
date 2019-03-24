@@ -7,10 +7,10 @@ import Image from 'components/Image/Image';
 const PlayButton = styled.div`
     width: 1px;
     height: 1px;
-    border: 15px solid transparent;
+    border: 10px solid transparent;
     border-left-color: ${props => props.theme.colors.varden};
     margin-left: auto;
-    transition: transform, border-left-color 0.1s ease-in-out;
+    transition: transform 0.3s ease-in;
 
     &:hover {
         transform: scale(1.2);
@@ -25,7 +25,7 @@ const Item = styled.li`
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
-    padding: ${props => props.theme.spacing.xxs};
+    padding: ${props => props.theme.spacing.xs};
     transition: background-color 0.1s ease-out;
 
     &:hover {
@@ -39,6 +39,7 @@ const TrackInfo = styled.div`
     flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: flex-start;
+    padding: 0 ${props => props.theme.spacing.xs};
 `;
 TrackInfo.displayName = 'TrackInfo';
 

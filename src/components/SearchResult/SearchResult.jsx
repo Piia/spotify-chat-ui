@@ -3,44 +3,62 @@ import PropTypes from 'prop-types';
 import TrackList from 'components/TrackList/TrackList';
 import TrackItem from 'components/TrackList/TrackItem';
 import Spinner from 'components/Spinner/Spinner';
+import ErrorPage from 'components/ErrorPage/ErrorPage';
 
-const IMAGE_URL_ORDER = 2;
+const IMAGE_URL_INDEX = 2;
 
-const SearchResult = ({ tracks, loading, onPlay }) => {
+const SearchResult = ({ tracks, loading, onPlay, error }) => {
+    console.log(error, Object.keys(error) > 0);
+    if (loading) {
+        return (
+            <TrackList>
+                <Spinner size={ 2 } style={{ margin: '2em auto' }} />
+            </TrackList>
+        );
+    }
+    if (error && Object.keys(error).length > 0) {
+        console.log(error);
+        return (
+            <TrackList>
+                <ErrorPage message={ error.message || error } />
+            </TrackList>
+        );
+    }
+
     return (
         <TrackList>
-            { loading
-                ? <Spinner size={ 2 } />
-                : tracks.map(track => {
-                    if (!track.album || !track.name) {
-                        return null;
-                    }
-                    return (
-                        <TrackItem 
-                            key={ `${track.album.name}-${track.name }` } 
-                            imageUrl={ track.album
+            {tracks.map(track => {
+                if (!track.album || !track.name) {
+                    return null;
+                }
+                return (
+                    <TrackItem 
+                        key={ `${track.album.name}-${track.name }` } 
+                        imageUrl={ track.album
                             && track.album.images
-                            && track.album.images[IMAGE_URL_ORDER]
-                                ? track.album.images[IMAGE_URL_ORDER].url
-                                : null } 
-                            title={ track.name } 
-                            text={ track.album.name }
-                            onPlay={ () => onPlay(track.uri) }
-                        />
-                    );
-                }) }
+                            && track.album.images[IMAGE_URL_INDEX]
+                            ? track.album.images[IMAGE_URL_INDEX].url
+                            : null } 
+                        title={ track.name } 
+                        text={ track.album.name }
+                        onPlay={ () => onPlay(track.uri) }
+                    />
+                );
+            })}
         </TrackList>
     );
 };
 
 SearchResult.defaultProps = {
     loading: false,
+    error: {},
 };
 
 SearchResult.propTypes = {
     tracks: PropTypes.array.isRequired,
     onPlay: PropTypes.func.isRequired,
-    loading:PropTypes.bool,
+    loading: PropTypes.bool,
+    error: PropTypes.object,
 };
 
 export default SearchResult;
