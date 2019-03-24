@@ -9,6 +9,7 @@ import NavBar from 'containers/NavBar/NavBar';
 import SearchPanel from 'containers/SearchPanel/SearchPanel';
 
 import { loadProfile } from 'redux/profile/profile';
+import { updatePlaybackState } from 'redux/playback/playback';
 
 const MainContent = styled.section`
     display: flex;
@@ -19,6 +20,7 @@ export class MainPage extends PureComponent {
 
     componentDidMount() {
         this.props.loadProfile();
+        this.props.updatePlaybackState();
     }
 
     render() {
@@ -39,7 +41,8 @@ MainPage.propTypes = {
 }
 
 const mapDispatchToProps = dispatch => ({
-    loadProfile: () => dispatch(loadProfile())
+    loadProfile: () => dispatch(loadProfile()),
+    updatePlaybackState: () => dispatch(updatePlaybackState())
 });
 const connector = connect(null, mapDispatchToProps);
 

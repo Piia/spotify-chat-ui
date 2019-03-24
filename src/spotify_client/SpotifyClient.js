@@ -35,6 +35,10 @@ class SpotifyClient {
         });
     }
 
+    static getPlaybackState() {
+        return axios.get(`${process.env.REACT_APP_BACKEND_BASEPATH}/playback/state`);
+    }
+
 }
 
 export default SpotifyClient;

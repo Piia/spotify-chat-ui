@@ -50,7 +50,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     searchTracks: trackName => dispatch(searchTracks(trackName)),
-    playTrack: trackUri => dispatch(playTrack(trackUri)),
+    playTrack: track => dispatch(playTrack(track)),
 });
 
 const connector = connect(mapStateToProps, mapDispatchToProps);

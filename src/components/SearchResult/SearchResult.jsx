@@ -8,7 +8,6 @@ import ErrorPage from 'components/ErrorPage/ErrorPage';
 const IMAGE_URL_INDEX = 2;
 
 const SearchResult = ({ tracks, loading, onPlay, error }) => {
-    console.log(error, Object.keys(error) > 0);
     if (loading) {
         return (
             <TrackList>
@@ -41,7 +40,7 @@ const SearchResult = ({ tracks, loading, onPlay, error }) => {
                             : null } 
                         title={ track.name } 
                         text={ track.album.name }
-                        onPlay={ () => onPlay(track.uri) }
+                        onPlay={ () => onPlay(track) }
                     />
                 );
             })}
