@@ -11,6 +11,8 @@ const Navigation = styled.nav`
 Navigation.displayName = 'Navigation';
 
 const NavList = styled.ul`
+    display: flex;
+    justify-content: flex-end;
     padding: 1em;
 `;
 NavList.displayName = 'NavList';
@@ -18,7 +20,6 @@ NavList.displayName = 'NavList';
 const NavItem = styled.li`
     display: inline;
     color: ${props => props.theme.colors.magnolia};
-    float: ${props => props.right && 'right'};
 
     &:hover {
         background-color: ${props => props.theme.colors.outerSpace};
@@ -33,8 +34,6 @@ class NavBar extends PureComponent {
         return (
             <Navigation>
                 <NavList>
-                    <NavItem>Link 1</NavItem>
-                    <NavItem>Link 2</NavItem>
                     <NavItem right>{ profile && profile.displayName }</NavItem>
                 </NavList>
             </Navigation>
