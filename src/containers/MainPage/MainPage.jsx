@@ -10,11 +10,19 @@ import SearchPanel from 'containers/SearchPanel/SearchPanel';
 
 import { loadProfile } from 'redux/profile/profile';
 import { updatePlaybackState } from 'redux/playback/playback';
+import PlaybackPanel from 'containers/PlaybackPanel/PlaybackPanel';
 
 const MainContent = styled.section`
     display: flex;
 `;
 MainContent.displayName = 'MainContent';
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+`;
+Wrapper.displayName = 'Wrapper';
 
 export class MainPage extends PureComponent {
 
@@ -29,7 +37,10 @@ export class MainPage extends PureComponent {
                 <NavBar />
                 <MainContent>
                     <SearchPanel />
-                    <Chat />
+                    <Wrapper>
+                        <PlaybackPanel />
+                        <Chat />
+                    </Wrapper>
                 </MainContent>
             </Fragment>
         );
