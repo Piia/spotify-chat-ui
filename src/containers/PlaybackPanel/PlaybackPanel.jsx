@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 
 import PanelImage from 'components/PanelImage/PanelImage';
+import PlayButton from 'components/PlayButton/PlayButton';
 
 const Panel = styled.section`
     background-color: ${props => props.theme.colors.cosmic};
@@ -22,7 +23,7 @@ class PlaybackPanel extends PureComponent {
         return (
             <Panel>
                 <PanelImage url={this.props.albumUrl} />
-                <button>Play/Pause</button>
+                <PlayButton />
             </Panel>
         );
     }
