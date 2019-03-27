@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import PanelImage from 'components/PanelImage/PanelImage';
 import PlayButton from 'components/PlayButton/PlayButton';
+import ProgressBar from 'components/ProgressBar/ProgressBar';
 
 const Panel = styled.section`
     background-color: ${props => props.theme.colors.cosmic};
@@ -13,7 +14,11 @@ const Panel = styled.section`
     display: flex;
 
     img {
-        margin-right: 1em;
+        margin-right: 2em;
+    }
+
+    button {
+        margin-right: 0.5em;
     }
 `;
 
@@ -24,6 +29,7 @@ class PlaybackPanel extends PureComponent {
             <Panel>
                 <PanelImage url={this.props.albumUrl} />
                 <PlayButton />
+                <ProgressBar />
             </Panel>
         );
     }

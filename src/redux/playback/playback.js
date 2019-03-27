@@ -91,7 +91,7 @@ export const playbackReducer = (state = initialState, action) => ({
                 currentTrack: action.playbackState.item,
                 progressMillis: action.playbackState.progress_ms,
                 isPlaying: action.playbackState.is_playing,
-                timestamp: action.playbackState.timestamp
+                timestamp: new Date().getTime()
             }
     }),
     [UPDATE_PLAYBACK_STATE_FAIL]: ({
