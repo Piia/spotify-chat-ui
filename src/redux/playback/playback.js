@@ -16,6 +16,9 @@ const PLAY_TRACK_SUCCESS = 'playback/PLAY_TRACK_SUCCESS';
 const PLAY_TRACK_FAIL = 'playback/PLAY_TRACK_FAIL';
 const UPDATE_PLAYBACK_STATE_SUCCESS = 'playback/SET_PLAYBACK_STATE_SUCCESS';
 const UPDATE_PLAYBACK_STATE_FAIL = 'playback/SET_PLAYBACK_STATE_FAIL';
+const PAUSE_TRACK = 'playback/PAUSE_TRACK';
+const RESUME_TRACK = 'playback/RESUME_TRACK';
+const TOGGLE_PLAYBACK_FAIL = 'playback/TOGGLE_PLAYBACK_FAILED';
 
 export const updatePlaybackState = () => {
     return dispatch => {
@@ -68,6 +71,38 @@ export const playTrack = track => {
 };
 
 
+export const pause = () => {
+    return (dispatch, getState) => {
+        SpotifyClient.pausePlayback().then(() => {
+            const { progressMillis, timestamp } = getState().playback.playback;
+            const progressNow = progressMillis + new Date().getTime() - timestamp;
+            dispatch({ type: PAUSE_TRACK, progressMillis: progressNow });
+        })
+        .catch(errorResponse => {
+            dispatch({
+                type: TOGGLE_PLAYBACK_FAIL,
+                error: { message: 'Failed to pause track'}
+            });
+        });
+    };
+}
+
+export const resume = () => {
+    return dispatch => {
+        SpotifyClient.resumePlayback().then(() => {
+            dispatch({ type: RESUME_TRACK });
+        })
+        .catch(errorResponse => {
+            dispatch({
+                type: TOGGLE_PLAYBACK_FAIL,
+                error: { message: 'Failed to resume track'}
+            });
+        });
+    };
+}
+
+
+
 export const playbackReducer = (state = initialState, action) => ({
     [PLAY_TRACK]: ({
         ...state,
@@ -95,6 +130,27 @@ export const playbackReducer = (state = initialState, action) => ({
             }
     }),
     [UPDATE_PLAYBACK_STATE_FAIL]: ({
+        ...state, 
+        error: action.error
+    }),
+    [PAUSE_TRACK]: ({
+        ...state, 
+        playback: {
+            ...state.playback,
+            isPlaying: false,
+            progressMillis: action.progressMillis,
+            timestamp: new Date().getTime(),
+        }
+    }),
+    [RESUME_TRACK]: ({
+        ...state, 
+        playback: {
+            ...state.playback,
+            isPlaying: true,
+            timestamp: new Date().getTime(),
+        }
+    }),
+    [TOGGLE_PLAYBACK_FAIL]: ({
         ...state, 
         error: action.error
     })

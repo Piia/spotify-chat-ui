@@ -35,6 +35,14 @@ class SpotifyClient {
         });
     }
 
+    static pausePlayback() {
+        return axios.put(`${process.env.REACT_APP_BACKEND_BASEPATH}/playback/pause`);
+    }
+
+    static resumePlayback() {
+        return axios.put(`${process.env.REACT_APP_BACKEND_BASEPATH}/playback/resume`);
+    }
+
     static getPlaybackState() {
         return axios.get(`${process.env.REACT_APP_BACKEND_BASEPATH}/playback/state`);
     }

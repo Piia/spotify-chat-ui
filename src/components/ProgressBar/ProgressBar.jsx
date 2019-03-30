@@ -20,7 +20,7 @@ const Bar = styled.div`
     height: 100%;
     width: ${props => props.initialWidth}%;
     background-color: ${props => props.theme.colors.voodoo};
-    animation: ${ProgressBarAnimation} ${props => props.animationTime}ms forwards;
+    animation: ${props => props.isPlaying && ProgressBarAnimation} ${props => props.animationTime}ms forwards;
     animation-timing-function: linear;
 `;
 
@@ -74,7 +74,7 @@ class ProgressBar extends PureComponent {
     render() {
         return (
             <BarOutline>
-                <Bar key={this.props.playback.timestamp} initialWidth={this.state.initialWidth} animationTime={this.state.animationTime} />
+                <Bar isPlaying={this.props.playback.isPlaying} key={this.props.playback.timestamp} initialWidth={this.state.initialWidth} animationTime={this.state.animationTime} />
             </BarOutline>
         );
     }

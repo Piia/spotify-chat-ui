@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 
-const StyledImage = styled.img`
+export const StyledImage = styled.img`
     width: auto;
     height: 100%;
 `;
