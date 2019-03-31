@@ -32,13 +32,15 @@ const SearchResult = ({ tracks, loading, onPlay, error }) => {
                 }
                 return (
                     <TrackItem 
-                        key={ `${track.album.name}-${track.name }` } 
+                        key={ track.id } 
                         imageUrl={ track.album
                             && track.album.images
                             && track.album.images[IMAGE_URL_INDEX]
                             ? track.album.images[IMAGE_URL_INDEX].url
                             : null } 
-                        title={ track.name } 
+                        track={ track.name } 
+                        artists={ track.artists.map(artist => artist.name) }
+                        album={ track.album.name }
                         text={ track.album.name }
                         onPlay={ () => onPlay(track) }
                     />

@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 
 
 const StyledImage = styled.img`
-    width: ${props => props.width};
-    height: ${props => props.height};
+    width: ${props => props.width}px;
+    min-width: ${props => props.width}px;
+    max-width: ${props => props.width}px;
+    height: ${props => props.height}px;
+    min-height: ${props => props.height}px;
+    max-height: ${props => props.height}px;
 `;
 StyledImage.displayName = 'StyledImage';
 
@@ -25,8 +29,8 @@ const Image = ({ url, width, height }) => {
 
 Image.defaultProps = {
     url: null,
-    width: 50,
-    height: 50,
+    width: 64,
+    height: 64,
 };
 
 Image.propTypes = {
