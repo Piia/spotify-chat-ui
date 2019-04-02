@@ -7,7 +7,6 @@ const BarOutline = styled.div`
     border: 0.2em solid black;
     border-radius: 1.5em; 
     height: 0.7em;
-    width: 60%;
 `;
 
 const ProgressBarAnimation = keyframes`
