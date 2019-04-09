@@ -99,7 +99,10 @@ class PlaybackPanel extends PureComponent {
                         </Text>
                         <ProgressBar />
                         <TimerWrapper>
-                            <Timer isPlaying={this.props.playback.isPlaying} />
+                            <Timer
+                                isPlaying={this.props.playback.isPlaying}
+                                progressMillis={this.props.playback.progressMillis}
+                            />
                             <span>{ format(trackDurationMillis) }</span>
                         </TimerWrapper>
                     </BarWrapper>
