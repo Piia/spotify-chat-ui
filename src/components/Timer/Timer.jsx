@@ -16,14 +16,15 @@ class Timer extends PureComponent {
     componentDidUpdate(prevProps) {
         const { isPlaying, progressMillis } = this.props;
 
+        if (progressMillis !== prevProps.progressMillis) {
+            this.setTimeTo(progressMillis);
+        }
+
         if (!this.timerRef && isPlaying) {
             this.setTimer();
         }
         else if (this.timerRef && !isPlaying) {
             this.clearTimer();
-        }
-        else if (progressMillis !== prevProps.progressMillis) {
-            this.setTimeTo(progressMillis);
         }
     }
 
