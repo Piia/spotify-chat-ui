@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { format } from './utils';
 
@@ -44,7 +44,7 @@ class Timer extends PureComponent {
     }
 
     render() {
-        return <span>{ format(this.state.time) }</span>;
+        return format(this.state.time);
     }
 }
 
@@ -56,6 +56,6 @@ Timer.defaultProps = {
 };
 
 Timer.propTypes = {
-    isPlaying: PropTypes.bool,
-    progressMillis: PropTypes.number,
+    isPlaying: PropTypes.bool.isRequired,
+    progressMillis: PropTypes.number.isRequired,
 };

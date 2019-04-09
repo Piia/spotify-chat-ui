@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { throttle } from 'lodash';
 
 import PanelImage from 'components/PanelImage/PanelImage';
 import PlayButton from 'components/PlayButton/PlayButton';
 import ProgressBar from 'components/ProgressBar/ProgressBar';
-
+import TimerPanel from 'components/Timer/TimerPanel';
 import { updatePlaybackState } from 'redux/playback/playback';
-import { throttle } from 'lodash';
-import { format } from 'components/Timer/utils';
-import Timer from 'components/Timer/Timer';
+
 
 const Panel = styled.section`
     background-color: ${props => props.theme.colors.cosmic};
@@ -18,6 +18,7 @@ const Panel = styled.section`
     align-items: center;
     display: flex;
 `;
+Panel.displayName = 'Panel';
 
 const Wrapper = styled.div`
     display: flex;
@@ -26,6 +27,7 @@ const Wrapper = styled.div`
     width: 100%;
     padding: ${props => props.theme.spacing.sm};
 `;
+Wrapper.displayName = 'Wrapper';
 
 const BarWrapper = styled.div`
     display: flex;
@@ -33,6 +35,7 @@ const BarWrapper = styled.div`
     width: 60%;
     margin-left: 1em;
 `;
+BarWrapper.displayName = 'BarWrapper';
 
 const Text = styled.div`
     display: flex;
@@ -40,10 +43,7 @@ const Text = styled.div`
     height: 2em;
     padding: 0 ${props => props.theme.spacing.sm};
 `;
-
-const TimerWrapper = styled(Text)`
-    justify-content: space-between;
-`;
+Text.displayName = 'Text';
 
 const Name = styled.span`
     font-family: ${props => props.theme.font.family.verdana};
@@ -51,6 +51,7 @@ const Name = styled.span`
     font-weight: ${props => props.theme.font.weight.bold};
     color: ${props => props.theme.colors.black};
 `;
+Name.displayName = 'Name';
 
 const Album = styled.span`
     font-family: ${props => props.theme.font.family.verdana};
@@ -58,6 +59,7 @@ const Album = styled.span`
     font-weight: ${props => props.theme.font.weight.bold};
     color: ${props => props.theme.colors.black};
 `;
+Album.displayName = 'Album';
 
 class PlaybackPanel extends PureComponent {
     timerRef = null;
@@ -79,32 +81,27 @@ class PlaybackPanel extends PureComponent {
     }
 
     render() {
-        const albumUrl = this.props.playback.currentTrack
-            ? this.props.playback.currentTrack.album.images[0].url
-            : null;
-        
-        const currentTrack = this.props.playback.currentTrack;
+        const { playback: { currentTrack, isPlaying, progressMillis } } = this.props;
 
+        const albumUrl = currentTrack ? currentTrack.album.images[0].url : null;
         const trackDurationMillis = currentTrack ? currentTrack.durationMs : '';
 
         return (
             <Panel>
-                <PanelImage url={albumUrl} />
+                <PanelImage url={ albumUrl } />
                 <Wrapper>
                     <PlayButton />
                     <BarWrapper>
                         <Text>
                             <Name>{ currentTrack && currentTrack.name }</Name>
-                            <Album> &nbsp;- { currentTrack && currentTrack.album.name }</Album>
+                            <Album>&nbsp;- { currentTrack && currentTrack.album.name }</Album>
                         </Text>
                         <ProgressBar />
-                        <TimerWrapper>
-                            <Timer
-                                isPlaying={this.props.playback.isPlaying}
-                                progressMillis={this.props.playback.progressMillis}
-                            />
-                            <span>{ format(trackDurationMillis) }</span>
-                        </TimerWrapper>
+                        <TimerPanel
+                            isPlaying={ isPlaying }
+                            progressMillis={ progressMillis }
+                            trackDurationMillis={ trackDurationMillis }
+                        />
                     </BarWrapper>
                 </Wrapper>
             </Panel>
@@ -112,6 +109,10 @@ class PlaybackPanel extends PureComponent {
     }
 }
 
+PlaybackPanel.propTypes = {
+    playback: PropTypes.object.isRequired,
+    updatePlaybackState: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
     playback: state.playback.playback
