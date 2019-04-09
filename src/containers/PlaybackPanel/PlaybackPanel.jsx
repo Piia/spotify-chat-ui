@@ -6,8 +6,7 @@ import { throttle } from 'lodash';
 
 import PanelImage from 'components/PanelImage/PanelImage';
 import PlayButton from 'components/PlayButton/PlayButton';
-import ProgressBar from 'components/ProgressBar/ProgressBar';
-import TimerPanel from 'components/Timer/TimerPanel';
+import Playback from 'components/Playback/Playback';
 import { updatePlaybackState } from 'redux/playback/playback';
 
 
@@ -20,53 +19,22 @@ const Panel = styled.section`
 `;
 Panel.displayName = 'Panel';
 
-const Wrapper = styled.div`
+const RowWrapper = styled.div`
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     width: 100%;
     padding: ${props => props.theme.spacing.sm};
 `;
-Wrapper.displayName = 'Wrapper';
+RowWrapper.displayName = 'RowWrapper';
 
-const BarWrapper = styled.div`
-    display: flex;
-    flex-flow: column nowrap;
-    width: 60%;
-    margin-left: 1em;
-`;
-BarWrapper.displayName = 'BarWrapper';
-
-const Text = styled.div`
-    display: flex;
-    align-items: center;
-    height: 2em;
-    padding: 0 ${props => props.theme.spacing.sm};
-`;
-Text.displayName = 'Text';
-
-const Name = styled.span`
-    font-family: ${props => props.theme.font.family.verdana};
-    font-size: ${props => props.theme.font.size.md};
-    font-weight: ${props => props.theme.font.weight.bold};
-    color: ${props => props.theme.colors.black};
-`;
-Name.displayName = 'Name';
-
-const Album = styled.span`
-    font-family: ${props => props.theme.font.family.verdana};
-    font-size: ${props => props.theme.font.size.md};
-    font-weight: ${props => props.theme.font.weight.bold};
-    color: ${props => props.theme.colors.black};
-`;
-Album.displayName = 'Album';
 
 class PlaybackPanel extends PureComponent {
     timerRef = null;
 
     updatePlaybackThrottled = throttle(this.props.updatePlaybackState, 200);
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate() {
         const { playback: { currentTrack, isPlaying, timestamp, progressMillis } } = this.props;
         if (this.timerRef) {
             clearTimeout(this.timerRef);
@@ -81,29 +49,17 @@ class PlaybackPanel extends PureComponent {
     }
 
     render() {
-        const { playback: { currentTrack, isPlaying, progressMillis } } = this.props;
+        const { playback: { currentTrack }, playback } = this.props;
 
         const albumUrl = currentTrack ? currentTrack.album.images[0].url : null;
-        const trackDurationMillis = currentTrack ? currentTrack.durationMs : 0;
 
         return (
             <Panel>
                 <PanelImage url={ albumUrl } />
-                <Wrapper>
+                <RowWrapper>
                     <PlayButton />
-                    <BarWrapper>
-                        <Text>
-                            <Name>{ currentTrack && currentTrack.name }</Name>
-                            <Album>&nbsp;- { currentTrack && currentTrack.album.name }</Album>
-                        </Text>
-                        <ProgressBar />
-                        <TimerPanel
-                            isPlaying={ isPlaying }
-                            progressMillis={ progressMillis }
-                            trackDurationMillis={ trackDurationMillis }
-                        />
-                    </BarWrapper>
-                </Wrapper>
+                    <Playback playback={ playback } />
+                </RowWrapper>
             </Panel>
         );
     }

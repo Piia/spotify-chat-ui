@@ -8,8 +8,7 @@ const TimerWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 2em;
-    padding: 0 ${props => props.theme.spacing.sm};
+    padding: ${props => props.theme.spacing.xs};
 `;
 TimerWrapper.displayName = 'TimerWrapper';
 
