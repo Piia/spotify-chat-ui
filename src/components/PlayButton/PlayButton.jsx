@@ -32,7 +32,7 @@ Button.displayName = 'Button';
 
 const Play = styled.span`
     font-size: 1.75rem;
-    padding: 2px 0 0 5px;
+    padding: 0 0 0 5px;
 `;
 Play.displayName = 'Play';
 
