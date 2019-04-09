@@ -6,7 +6,7 @@ import { resume, pause } from 'redux/playback/playback';
 
 const Button = styled.button`
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: center;
     box-sizing: content-box;
     width: 3.5rem;
