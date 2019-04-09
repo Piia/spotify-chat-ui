@@ -84,7 +84,7 @@ class PlaybackPanel extends PureComponent {
         const { playback: { currentTrack, isPlaying, progressMillis } } = this.props;
 
         const albumUrl = currentTrack ? currentTrack.album.images[0].url : null;
-        const trackDurationMillis = currentTrack ? currentTrack.durationMs : '';
+        const trackDurationMillis = currentTrack ? currentTrack.durationMs : 0;
 
         return (
             <Panel>
@@ -117,11 +117,9 @@ PlaybackPanel.propTypes = {
 const mapStateToProps = state => ({
     playback: state.playback.playback
 });
-
-
 const mapDispatchToProps = dispatch => ({
     updatePlaybackState: () => dispatch(updatePlaybackState())
 });
+const connected = connect(mapStateToProps, mapDispatchToProps);
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlaybackPanel);
+export default connected(PlaybackPanel);

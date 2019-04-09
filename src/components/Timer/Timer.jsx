@@ -33,6 +33,7 @@ class Timer extends PureComponent {
 
     clearTimer = () => {
         clearInterval(this.timerRef);
+        this.timerRef = null;
     }
 
     incrementTime = () => {
@@ -40,7 +41,7 @@ class Timer extends PureComponent {
     }
 
     setTimeTo = millis => {
-        this.setState(oldState => ({ time: millis }));
+        this.setState({ time: millis });
     }
 
     render() {
