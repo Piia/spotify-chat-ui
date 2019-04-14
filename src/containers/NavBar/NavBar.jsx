@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 const Navigation = styled.nav`
+    height: 50px;
     display: block;
     position: relative;
     background-color: ${props => props.theme.colors.voodoo};

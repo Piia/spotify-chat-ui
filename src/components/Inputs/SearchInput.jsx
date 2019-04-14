@@ -26,7 +26,7 @@ const SearchInput = ({ model, property, onChange, onKeyPress, placeholder, disab
 
     return (
         <Input
-            value={ model && property && model.property }
+            value={ model && property && model[property] }
             onChange={ (event) => onChange(property, event.target.value) }
             onKeyPress={ onKeyPress }
             placeholder={ placeholder }
