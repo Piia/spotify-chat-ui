@@ -1,19 +1,13 @@
 import React, { PureComponent } from 'react';
 import styled from 'styled-components';
-
+import { connect } from 'react-redux';
+import ChatMessage from 'components/Chat/ChatMessage';
 import withChatClient from 'components/withChatClient/withChatClient';
 
 const Container = styled.article`
     padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.xl};
 `;
 Container.displayName = 'Container';
-
-const BasicText = styled.p`
-    font-family: ${props => props.theme.font.family.georgia};
-    font-size: ${props => props.theme.font.size.md};
-    font-weight: ${props => props.theme.font.weight.normal};
-    color: ${props => props.theme.colors.magnolia};
-`;
 
 
 class Chat extends PureComponent {
@@ -28,11 +22,16 @@ class Chat extends PureComponent {
     render() {
         return (
             <Container>
-                <BasicText>Hello Chat!</BasicText>
+                {this.props.chatMessages.map(message => <ChatMessage message={message} />)}
             </Container>
         );
     }
 }
 
+const mapStateToProps = state => ({
+    chatMessages: state.chat.messages
+});
 
-export default withChatClient(Chat);
+const connector = connect(mapStateToProps);
+
+export default withChatClient(connector(Chat));

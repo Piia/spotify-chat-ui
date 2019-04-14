@@ -44,10 +44,6 @@ const withChatClient = WrappedComponent => {
             );
         }
     }
-
-    const mapStateToProps = state => ({
-        chatMessages: state.chat.messages
-    });
     
     
     const mapDispatchToProps = dispatch => ({
@@ -56,7 +52,7 @@ const withChatClient = WrappedComponent => {
     });
     
     
-    const ConnectedChatClient = connect(mapStateToProps, mapDispatchToProps)(ChatClient);
+    const ConnectedChatClient = connect(null, mapDispatchToProps)(ChatClient);
 
     return ConnectedChatClient;
 

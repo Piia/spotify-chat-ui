@@ -18,7 +18,7 @@ const ChatMessage = props => {
     return (
         <Container>
             <BasicText>Hello Chat!</BasicText>
-            <BasicText>{ props.message }</BasicText>
+            <BasicText>{ props.message && props.message.body }</BasicText>
         </Container>
     );
 };
