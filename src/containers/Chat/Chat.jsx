@@ -22,7 +22,9 @@ class Chat extends PureComponent {
     render() {
         return (
             <Container>
-                {this.props.chatMessages.map(message => <ChatMessage message={message} />)}
+                {this.props.chatMessages.map(message =>
+                    <ChatMessage message={message} key={message.id} />
+                )}
             </Container>
         );
     }
