@@ -1,8 +1,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import Chat from './Chat';
+import ChatMessage from './ChatMessage';
 
-storiesOf('Chat', module)
+storiesOf('ChatMessage', module)
     .add('default', () => (
-        <Chat />
+        <ChatMessage />
     )); 

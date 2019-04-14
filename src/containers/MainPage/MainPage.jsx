@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import Chat from 'components/Chat/Chat';
+import Chat from 'containers/Chat/Chat';
 import NavBar from 'containers/NavBar/NavBar';
 import SearchPanel from 'containers/SearchPanel/SearchPanel';
 

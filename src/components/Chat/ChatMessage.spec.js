@@ -1,10 +1,10 @@
 import React from 'react';
-import Chat from './Chat';
+import ChatMessage from './ChatMessage';
 
-describe('Chat', () => {
+describe('ChatMessage', () => {
     let component;
     beforeEach(() => {
-        component = shallow(<Chat />);
+        component = shallow(<ChatMessage />);
     });
 
     it('should render component', () => {
