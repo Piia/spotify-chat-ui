@@ -4,7 +4,7 @@ import moment from 'moment';
 
 const Container = styled.section`
     // padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.xl};
-    border-bottom: 1px dashed ${props => props.theme.colors.strikemaster};
+    border-bottom: 1px solid ${props => props.theme.colors.strikemaster};
 `;
 Container.displayName = 'Container';
 
