@@ -6,8 +6,8 @@ import { resume, pause } from 'redux/playback/playback';
 
 const Button = styled.button`
     display: inline-flex;
-    align-items: baseline;
     justify-content: center;
+    align-items: center;
     box-sizing: content-box;
     width: 3.5rem;
     height: 3.5rem;
@@ -22,7 +22,7 @@ const Button = styled.button`
 
     &:hover {
         cursor: pointer;
-        background-color: ${props => props.theme.colors.magnolia};
+        background-color: ${props => props.theme.colors.leather};
     }
     &:focus {
         outline: none;
@@ -30,13 +30,13 @@ const Button = styled.button`
 `;
 Button.displayName = 'Button';
 
-const Play = styled.span`
+const Play = styled.div`
     font-size: 1.75rem;
     padding: 0 0 0 5px;
 `;
 Play.displayName = 'Play';
 
-const Pause = styled.span`
+const Pause = styled.div`
     font-size: 1rem;
     padding: 0 0 0 5px;
 `;
