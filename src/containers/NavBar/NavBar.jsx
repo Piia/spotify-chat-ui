@@ -7,7 +7,8 @@ const Navigation = styled.nav`
     height: 50px;
     display: block;
     position: relative;
-    background-color: ${props => props.theme.colors.voodoo};
+    background-color: ${props => props.theme.colors.outerSpace};
+    border-bottom: 1px solid ${props => props.theme.colors.black};
 `;
 Navigation.displayName = 'Navigation';
 

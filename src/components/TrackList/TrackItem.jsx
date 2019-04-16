@@ -86,7 +86,7 @@ const Item = styled.li`
     flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-start;
-    padding: ${props => props.theme.spacing.xs};
+    padding: ${props => props.theme.spacing.xxs};
     transition: background-color 0.1s ease-out;
 
     &:hover {

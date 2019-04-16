@@ -37,6 +37,7 @@ const font = {
 };
 
 const spacing = {
+    xxs: 0.25 * ROOT + 'px',
     xs: 0.5 * ROOT + 'px',
     sm: 0.75 * ROOT + 'px',
     md: ROOT + 'px',

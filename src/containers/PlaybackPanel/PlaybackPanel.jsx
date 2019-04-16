@@ -16,6 +16,7 @@ const Panel = styled.section`
     height: 130px;
     align-items: center;
     display: flex;
+    border-left: 1px solid ${props => props.theme.colors.black};
 `;
 Panel.displayName = 'Panel';
 

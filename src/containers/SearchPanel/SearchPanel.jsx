@@ -11,8 +11,7 @@ import { playTrack } from 'redux/playback/playback';
 
 const Panel = styled.aside`
     flex-flow: column nowrap;
-    background-color: ${props => props.theme.colors.goblin};
-    padding: ${props => props.theme.spacing.md};
+    background-color: ${props => props.theme.colors.voodoo};
 `;
 Panel.displayName = 'Panel';
 

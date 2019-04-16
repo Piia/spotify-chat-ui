@@ -13,7 +13,7 @@ const Input = styled.input`
     color: ${props => props.theme.colors.varden};
     padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.md};
     border-radius: 2em;
-    border: none;
+    border: 1px solid ${props => props.theme.colors.black};
     appearance: none;
     
     &:focus {

@@ -6,7 +6,6 @@ import withChatClient from 'components/withChatClient/withChatClient';
 
 
 const MessageContainer = styled.article`
-    margin-left: ${props => props.theme.spacing.xl};
     padding: ${props => props.theme.spacing.xs}; 
     overflow-x: hidden;
     overflow-y: scroll;
@@ -34,7 +33,6 @@ const InputTextArea = styled.textarea`
     padding: ${props => props.theme.spacing.xs};
     box-sizing: border-box;
     background-color: ${props => props.theme.colors.outerSpace};
-    border: none;
     color: ${props => props.theme.colors.magnolia};
     width: 100%;
     border: 1px solid ${props => props.theme.colors.black};
@@ -67,11 +65,10 @@ const SubmitButton = styled.button`
 SubmitButton.displayName = "SubmitButton";
 
 const Container = styled.section`
-    padding-right: ${props => props.theme.spacing.xl};
+    padding-right: ${props => props.theme.spacing.md};
     height: 7rem;
     display: flex;
     align-items: center;
-    margin-left: ${props => props.theme.spacing.xl};
 `;
 Container.displayName = "Container";
 
