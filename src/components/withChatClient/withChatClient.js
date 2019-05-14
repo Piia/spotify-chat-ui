@@ -14,18 +14,24 @@ const withChatClient = WrappedComponent => {
         clientRef = null;
 
         onConnect = () => {
-            this.props.getChatHistory();
+        }
+
+        componentDidUpdate(prevProps) {
+            if(this.props.trackId !== null && this.props.trackId !== prevProps.trackId) {
+                this.props.getChatHistory(this.props.trackId);
+            }
         }
 
         sendChatMessage = message => {
+            if(!this.props.trackId) return;
+
             this.clientRef.sendMessage(
-                "/app/chat",
+                `/app/chat/${this.props.trackId}`,
                 JSON.stringify({body: message})
             );
         };
 
         onMessage = message => {
-            console.log(message);
             this.props.addMessage(message); 
         };
 
@@ -34,10 +40,10 @@ const withChatClient = WrappedComponent => {
                 <Fragment>
                     <SockJsClient
                         url={`${process.env.REACT_APP_BACKEND_BASEPATH}/chat`}
-                        topics={['/topic/messages']}
+                        topics={[`/topic/${this.props.trackId}/messages`]}
                         onMessage={ this.onMessage }
                         onConnect={ this.onConnect } 
-                        ref={ client => { this.clientRef = client; console.log(client) }}
+                        ref={ client => { this.clientRef = client }}
                     />
                     <WrappedComponent sendChatMessage={ this.sendChatMessage } { ...this.props } />
                 </Fragment>
@@ -45,14 +51,17 @@ const withChatClient = WrappedComponent => {
         }
     }
     
+    const mapStateToProps = state => ({
+        trackId: state.playback.playback && state.playback.playback.currentTrack && state.playback.playback.currentTrack.id
+    });
     
     const mapDispatchToProps = dispatch => ({
         addMessage: message => dispatch(addMessage(message)),
-        getChatHistory: () => dispatch(getChatHistory())
+        getChatHistory: trackId => dispatch(getChatHistory(trackId))
     });
     
     
-    const ConnectedChatClient = connect(null, mapDispatchToProps)(ChatClient);
+    const ConnectedChatClient = connect(mapStateToProps, mapDispatchToProps)(ChatClient);
 
     return ConnectedChatClient;
 

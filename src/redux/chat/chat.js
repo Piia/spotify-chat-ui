@@ -10,9 +10,9 @@ const HISTORY_UPDATE_SUCCESS = 'chat/HISTORY_UPDATE_SUCCESS';
 const NEW_MESSAGE = 'chat/NEW_MESSAGE';
 
 
-export const getChatHistory = () => {
+export const getChatHistory = trackId => {
     return dispatch => {
-        ChatClient.getChatHistory().then(response => {
+        ChatClient.getChatHistory(trackId).then(response => {
             dispatch({
                 type: HISTORY_UPDATE_SUCCESS,
                 history: response.data.history
