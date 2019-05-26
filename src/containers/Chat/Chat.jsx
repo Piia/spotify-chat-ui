@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import ChatMessage from 'components/Chat/ChatMessage';
+import ChatSubscriber from 'components/Chat/ChatSubscriber';
 import withChatClient from 'components/withChatClient/withChatClient';
 
 
@@ -9,10 +10,11 @@ const MessageContainer = styled.article`
     padding: ${props => props.theme.spacing.xs}; 
     overflow-x: hidden;
     overflow-y: scroll;
-    height: calc(100% - 7rem);
     background-color: ${props => props.theme.colors.outerSpace};
     box-sizing: border-box;
     border: 1px solid ${props => props.theme.colors.black};
+    height: 100%;
+    width: 100%;
 `;
 MessageContainer.displayName = 'Container';
 
@@ -24,6 +26,16 @@ const ChatSection = styled.section`
 `;
 ChatSection.displayName = 'ChatSection';
 
+
+const ChatterList = styled.section`
+    width: 15em;
+    padding: 1em;
+`;
+ChatterList.displayName = 'ChatterList';
+
+const ChatterListHeading = styled.h3`
+`;
+ChatterListHeading.displayName = 'ChatterListHeading';
 
 const InputTextArea = styled.textarea`
     height: 5rem;
@@ -121,6 +133,14 @@ class ChatInput extends PureComponent {
     }
 }
 
+
+const HorizontalWrapper = styled.section`
+    height: calc(100% - 7rem);
+    display: flex;
+`;
+HorizontalWrapper.displayName = 'HorizontalWrapper';
+
+
 class Chat extends PureComponent {
     messageContainerElement = null;
 
@@ -131,11 +151,19 @@ class Chat extends PureComponent {
     render() {
         return (
             <ChatSection>
-                <MessageContainer ref={ elem => { this.messageContainerElement = elem; } }>
-                    {this.props.chatMessages.map(message =>
-                        <ChatMessage message={message} key={message.id} />
-                    )}
-                </MessageContainer>
+                <HorizontalWrapper>
+                    <MessageContainer ref={ elem => { this.messageContainerElement = elem; } }>
+                        {this.props.chatMessages.map(message =>
+                            <ChatMessage message={message} key={message.id} />
+                        )}
+                    </MessageContainer>
+                    <ChatterList>
+                        <ChatterListHeading>Listeners</ChatterListHeading>
+                        { this.props.chatters.map(chatter => 
+                            <ChatSubscriber chatter={{ chatter }} />
+                        )}            
+                    </ChatterList>
+                </HorizontalWrapper>
                 <ChatInput sendChatMessage={ this.props.sendChatMessage } />
             </ChatSection>
         );
@@ -143,7 +171,8 @@ class Chat extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-    chatMessages: state.chat.messages
+    chatMessages: state.chat.messages,
+    chatters: state.chat.chatters
 });
 
 const connector = connect(mapStateToProps);
