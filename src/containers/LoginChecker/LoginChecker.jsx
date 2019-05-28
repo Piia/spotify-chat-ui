@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
-
-import Spinner from 'components/Spinner/Spinner';
 import { checkLogin, refreshAccessToken } from 'redux/login/login';
 
 class LoginChecker extends Component {
@@ -43,11 +41,7 @@ class LoginChecker extends Component {
     }
 
     render() {
-        if(this.props.checkingLogin) {
-            return <Spinner />
-        } else {
-            return this.props.children;
-        }
+        return this.props.children;
     }
 }
 
@@ -63,4 +57,6 @@ const mapStateToProps = state => ({
     tokenExpiresIn: state.login.tokenExpiresIn
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginChecker);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(LoginChecker);

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
+import Fade from 'components/Fade/Fade';
 import SpinnerPage from 'components/Spinner/SpinnerPage';
 import { login } from 'redux/login/login';
 
@@ -19,7 +19,7 @@ export class LoginLandingPage extends PureComponent {
     }
 
     render() {
-        return <SpinnerPage />;
+        return <Fade><SpinnerPage /></Fade>;
     }
 }
 
