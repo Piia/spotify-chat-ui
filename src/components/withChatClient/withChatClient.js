@@ -32,8 +32,8 @@ const withChatClient = WrappedComponent => {
 
 
         onMessage = (message, topic) => {
-            const subscriptionsTopic = `/topic/${this.props.trackId}/subscriptions`;
-            const messagesTopic = `/topic/${this.props.trackId}/messages`;
+            const subscriptionsTopic = `/topic/${this.props.trackId}.subscriptions`;
+            const messagesTopic = `/topic/${this.props.trackId}.messages`;
 
             // dispatch based on topic
             ({
@@ -68,8 +68,8 @@ const withChatClient = WrappedComponent => {
                     <SockJsClient
                         url={`${process.env.REACT_APP_BACKEND_BASEPATH}/chat`}
                         topics={[
-                            `/topic/${this.props.trackId}/subscriptions`,
-                            `/topic/${this.props.trackId}/messages`
+                            `/topic/${this.props.trackId}.subscriptions`,
+                            `/topic/${this.props.trackId}.messages`
                         ]}
                         onMessage={ this.onMessage }
                         onConnect={ this.onConnect } 
