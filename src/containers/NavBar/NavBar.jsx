@@ -13,21 +13,29 @@ const Navigation = styled.nav`
 Navigation.displayName = 'Navigation';
 
 const NavList = styled.ul`
-    display: flex;
-    justify-content: flex-end;
     padding: 1em;
 `;
 NavList.displayName = 'NavList';
 
 const NavItem = styled.li`
-    display: inline;
+    display: inline-block;
     color: ${props => props.theme.colors.magnolia};
+    float: ${props => props.right && 'right'};
 
     &:hover {
         background-color: ${props => props.theme.colors.outerSpace};
     }
 `;
 NavItem.displayName = 'NavItem';
+
+const Header = styled.header`
+    // display: inline;
+    font-family: ${props => props.theme.font.family.verdana};
+    font-size: ${props => props.theme.font.size.md};
+    font-weight: ${props => props.theme.font.weight.bold};
+    color: ${props => props.theme.colors.magnolia};
+`;
+Header.displayName = 'Header';
 
 class NavBar extends PureComponent {
     render() {
@@ -36,6 +44,7 @@ class NavBar extends PureComponent {
         return (
             <Navigation>
                 <NavList>
+                    <NavItem><Header>Spotify chat</Header></NavItem>
                     <NavItem right>{ profile && profile.displayName }</NavItem>
                 </NavList>
             </Navigation>
