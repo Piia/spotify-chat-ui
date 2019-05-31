@@ -1,6 +1,7 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { checkLogin, refreshAccessToken } from 'redux/login/login';
+import SpinnerPage from 'components/Spinner/SpinnerPage';
 
 class LoginChecker extends Component {
     // refresh every 15 minutes
@@ -41,7 +42,11 @@ class LoginChecker extends Component {
     }
 
     render() {
-        return this.props.children;
+        if(this.props.checkingLogin) {
+            return <SpinnerPage />;
+        } else {
+            return this.props.children;
+        }
     }
 }
 

@@ -27,33 +27,24 @@ const GlobalStyle = createGlobalStyle`
         border: 1px solid ${props => props.theme.colors.black};
     }
 
-    /* ENTER TRANSITION */
-    /* Declare transition start properties*/
-    .fade-enter {
-        transform: translateX(-100vw);
-        opacity: 0;
-        position: absolute;
+    .fade-enter, .fade-appear {
+        opacity: 0.01;
         
     }
 
-    /* Declare transition properties */
-    .fade-enter.fade-enter-active {
-        transform: translateX(0);
+    .fade-enter.fade-enter-active, .fade-appear.fade-appear-active {
         opacity: 1;
-        transition: all 600ms linear 600ms;
+        transition: opacity 280ms ease-in;
     }
 
-    /* EXIT TRANSITION */
     .fade-exit {
-        transform: translateX(0);
         opacity: 1;
         
     }
 
     .fade-exit.fade-exit-active {
-        transform: translateX(100vw);
-        opacity: 0;
-        transition: all 600ms linear
+        opacity: 0.01;
+        transition: opacity 280ms ease-out;
     }
 `;
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Spinner from './Spinner';
+import Fade from 'components/Fade/Fade';
 
 const Container = styled.div`
     position: absolute;
@@ -12,8 +13,10 @@ const Container = styled.div`
 `;
 
 const SpinnerPage = () =>
-    <Container>
-        <Spinner />
-    </Container>;
+    <Fade>
+        <Container>
+            <Spinner />
+        </Container>
+    </Fade>;
 
 export default SpinnerPage;
