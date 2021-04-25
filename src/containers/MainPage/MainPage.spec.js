@@ -11,6 +11,7 @@ describe('MainPage', () => {
         props = {
             loggedIn: false,
             loadProfile: () => {},
+            updatePlaybackState: () => {},
         }
         component = shallow(<MainPage { ...props } />);
     })
