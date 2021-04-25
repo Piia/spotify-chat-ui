@@ -37,7 +37,7 @@ const Header = styled.header`
 `;
 Header.displayName = 'Header';
 
-class NavBar extends PureComponent {
+export class NavBar extends PureComponent {
     render() {
         const { profile } = this.props;
 

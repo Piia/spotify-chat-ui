@@ -1,10 +1,15 @@
 import React from 'react';
-import NavBar from './NavBar';
+import {NavBar} from './NavBar';
 
 describe('NavBar', () => {
-    let component;
+    let component, props;
     beforeEach(() => {
-        component = shallow(<NavBar />);
+        props = {
+            profile: {
+
+            },
+        };
+        component = shallow(<NavBar {...props} />);
     });
 
     it('should render component', () => {

@@ -2,9 +2,14 @@ import React from 'react';
 import ChatMessage from './ChatMessage';
 
 describe('ChatMessage', () => {
-    let component;
+    let component, props;
     beforeEach(() => {
-        component = shallow(<ChatMessage />);
+        props = {
+            message: {
+                userId: 'fakeuser',
+            },
+        };
+        component = shallow(<ChatMessage {...props} />);
     });
 
     it('should render component', () => {

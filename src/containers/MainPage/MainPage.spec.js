@@ -1,7 +1,7 @@
 import React from 'react';
 import { MainPage } from './MainPage';
 import NavBar from 'containers/NavBar/NavBar';
-import Chat from 'components/Chat/Chat';
+import Chat from 'containers/Chat/Chat';
 import SearchPanel from 'containers/SearchPanel/SearchPanel';
 
 describe('MainPage', () => {
@@ -11,6 +11,7 @@ describe('MainPage', () => {
         props = {
             loggedIn: false,
             loadProfile: () => {},
+            updatePlaybackState: () => {},
         }
         component = shallow(<MainPage { ...props } />);
     })
