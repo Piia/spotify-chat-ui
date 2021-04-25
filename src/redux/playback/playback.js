@@ -28,12 +28,12 @@ export const updatePlaybackState = () => {
                 playbackState: playbackStateResponse.data
             });
         })
-        .catch(errorResponse => {
-            dispatch({
-                type: UPDATE_PLAYBACK_STATE_FAIL,
-                error: { message: 'Failed to get current playback state'}
+            .catch(errorResponse => {
+                dispatch({
+                    type: UPDATE_PLAYBACK_STATE_FAIL,
+                    error: { message: 'Failed to get current playback state'}
+                });
             });
-        });
     };
 }
 
@@ -78,12 +78,12 @@ export const pause = () => {
             const progressNow = progressMillis + new Date().getTime() - timestamp;
             dispatch({ type: PAUSE_TRACK, progressMillis: progressNow });
         })
-        .catch(errorResponse => {
-            dispatch({
-                type: TOGGLE_PLAYBACK_FAIL,
-                error: { message: 'Failed to pause track'}
+            .catch(errorResponse => {
+                dispatch({
+                    type: TOGGLE_PLAYBACK_FAIL,
+                    error: { message: 'Failed to pause track'}
+                });
             });
-        });
     };
 }
 
@@ -92,12 +92,12 @@ export const resume = () => {
         SpotifyClient.resumePlayback().then(() => {
             dispatch({ type: RESUME_TRACK });
         })
-        .catch(errorResponse => {
-            dispatch({
-                type: TOGGLE_PLAYBACK_FAIL,
-                error: { message: 'Failed to resume track'}
+            .catch(errorResponse => {
+                dispatch({
+                    type: TOGGLE_PLAYBACK_FAIL,
+                    error: { message: 'Failed to resume track'}
+                });
             });
-        });
     };
 }
 
@@ -121,13 +121,13 @@ export const playbackReducer = (state = initialState, action) => ({
         error: action.error        
     }),
     [UPDATE_PLAYBACK_STATE_SUCCESS]: ({
-            ...state, 
-            playback: action.playbackState && {
-                currentTrack: action.playbackState.item,
-                progressMillis: action.playbackState.progress_ms,
-                isPlaying: action.playbackState.is_playing,
-                timestamp: new Date().getTime()
-            }
+        ...state, 
+        playback: action.playbackState && {
+            currentTrack: action.playbackState.item,
+            progressMillis: action.playbackState.progress_ms,
+            isPlaying: action.playbackState.is_playing,
+            timestamp: new Date().getTime()
+        }
     }),
     [UPDATE_PLAYBACK_STATE_FAIL]: ({
         ...state, 
