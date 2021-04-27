@@ -1,4 +1,3 @@
-
 const ROOT = 16;
 
 const colors = {

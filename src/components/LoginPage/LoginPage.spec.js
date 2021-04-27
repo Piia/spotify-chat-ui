@@ -22,6 +22,8 @@ describe('LoginPage', () => {
 
     it('should render info', () => {
         expect(component.find('Info')).toExist();
-        expect(component.find('Info').children().text()).toEqual('(Using Spotify)');
+        expect(component.find('Info').children().text()).toEqual(
+            '(Using Spotify)'
+        );
     });
 });

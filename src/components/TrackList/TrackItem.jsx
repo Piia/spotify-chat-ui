@@ -39,7 +39,6 @@ const marqueeAnimation = keyframes`
     }
 `;
 
-
 const TrackTitle = styled.div`
     display: inline-block;
     font-family: ${props => props.theme.font.family.verdana};
@@ -77,7 +76,6 @@ const TitleRow = styled.div`
     ${AlbumTitle} {
         margin-right: ${props => props.theme.spacing.md};
     }
-
 `;
 TitleRow.displayName = 'TitleRow';
 
@@ -96,58 +94,66 @@ const Item = styled.li`
     &:hover ${TitleRow} {
         overflow: overlay;
         text-overflow: visible;
-        animation: ${props => props.hasMarquee && marqueeAnimation} 5s linear infinite;
+        animation: ${props => props.hasMarquee && marqueeAnimation} 5s linear
+            infinite;
         width: auto;
     }
 `;
 Item.displayName = 'Item';
 
-
 class TrackItem extends PureComponent {
     albumTitleElement = null;
 
     state = {
-        artistInfoOverflows: false
-    }
+        artistInfoOverflows: false,
+    };
 
     componentDidMount() {
         const childRight = this.albumTitleElement.getBoundingClientRect().right;
-        const parentRight = this.albumTitleElement.parentNode.getBoundingClientRect().right;
+        const parentRight = this.albumTitleElement.parentNode.getBoundingClientRect()
+            .right;
         const isOverflowing = childRight > parentRight;
 
         this.setState({
-            artistInfoOverflows: isOverflowing
-        })
+            artistInfoOverflows: isOverflowing,
+        });
     }
-
 
     render() {
         const { imageUrl, album, track, artists, onPlay } = this.props;
 
         return (
-            <Item hasMarquee={ this.state.artistInfoOverflows }>
-                <Image url={ imageUrl } width={ 64 } height={ 64 } />
+            <Item hasMarquee={this.state.artistInfoOverflows}>
+                <Image url={imageUrl} width={64} height={64} />
                 <TrackInfo>
                     <TitleRow>
                         <Fragment>
-                            <TrackTitle>{ track }</TrackTitle>
-                            <AlbumTitle ref={ el => {this.albumTitleElement = el;} }> - { album }</AlbumTitle>
+                            <TrackTitle>{track}</TrackTitle>
+                            <AlbumTitle
+                                ref={el => {
+                                    this.albumTitleElement = el;
+                                }}
+                            >
+                                {' '}
+                                - {album}
+                            </AlbumTitle>
                         </Fragment>
-                        { this.state.artistInfoOverflows ?
+                        {this.state.artistInfoOverflows ? (
                             <Fragment>
-                                <TrackTitle>{ track }</TrackTitle>
-                                <AlbumTitle> - { album }</AlbumTitle>
-                            </Fragment> : null
-                        }
+                                <TrackTitle>{track}</TrackTitle>
+                                <AlbumTitle> - {album}</AlbumTitle>
+                            </Fragment>
+                        ) : null}
                     </TitleRow>
-                    <ArtistInfo>{ artists.join(', ') }</ArtistInfo>
+                    <ArtistInfo>{artists.join(', ')}</ArtistInfo>
                 </TrackInfo>
-                { typeof onPlay === 'function' && <PlayButton onClick={ onPlay } /> }
+                {typeof onPlay === 'function' && (
+                    <PlayButton onClick={onPlay} />
+                )}
             </Item>
         );
     }
 }
-
 
 TrackItem.defaultProps = {
     imageUrl: null,

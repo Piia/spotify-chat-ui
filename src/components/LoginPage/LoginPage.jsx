@@ -11,7 +11,7 @@ const LinkBackground = styled.section`
     margin: 20vh auto auto;
     background-color: ${props => props.theme.colors.strikemaster};
 `;
-LinkBackground.displayName = 'LinkBackground'
+LinkBackground.displayName = 'LinkBackground';
 
 const LoginLink = styled.a`
     font-family: ${props => props.theme.font.family.verdana};
@@ -40,12 +40,12 @@ Info.displayName = 'Info';
 const LoginPage = () => {
     return (
         <LinkBackground>
-            <LoginLink href={ process.env.REACT_APP_BACKEND_LOGIN_URL }>
+            <LoginLink href={process.env.REACT_APP_BACKEND_LOGIN_URL}>
                 Log in
             </LoginLink>
             <Info>(Using Spotify)</Info>
         </LinkBackground>
     );
-}
+};
 
 export default LoginPage;

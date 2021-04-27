@@ -23,15 +23,16 @@ const Message = styled.p`
     color: ${props => props.theme.colors.varden};
 `;
 
-
 const ChatMessage = ({ message }) => {
     return (
         <Container>
-            <Title>{ message.userId } - { moment(message.timestamp).local().calendar() }</Title>
-            <Message>{ message.body }</Message>
+            <Title>
+                {message.userId} -{' '}
+                {moment(message.timestamp).local().calendar()}
+            </Title>
+            <Message>{message.body}</Message>
         </Container>
     );
 };
-
 
 export default ChatMessage;

@@ -9,7 +9,7 @@ describe('SearchBar', () => {
         props = {
             onSearch: spy(),
         };
-        component = shallow(<SearchBar { ...props } />);
+        component = shallow(<SearchBar {...props} />);
     });
 
     it('should render component', () => {
@@ -50,8 +50,8 @@ describe('SearchBar', () => {
 
         beforeEach(() => {
             property = component.instance().property;
-            value = 'ghjk'
-            component.setState({ model: { [property]: value } })
+            value = 'ghjk';
+            component.setState({ model: { [property]: value } });
             component.find(SearchInput).props().onKeyPress();
             component.find(SearchInput).props().onKeyPress({ key: 'Enter' });
         });
@@ -61,7 +61,9 @@ describe('SearchBar', () => {
         });
 
         it('should pass correct arguments', () => {
-            expect(props.onSearch.firstCall.args[0]).toEqual(component.state().model[property]);
+            expect(props.onSearch.firstCall.args[0]).toEqual(
+                component.state().model[property]
+            );
         });
     });
 
@@ -70,8 +72,8 @@ describe('SearchBar', () => {
 
         beforeEach(() => {
             property = component.instance().property;
-            value = 'ghjk'
-            component.setState({ model: { [property]: value } })
+            value = 'ghjk';
+            component.setState({ model: { [property]: value } });
             component.find('Search').props().onClick();
         });
 
@@ -80,7 +82,9 @@ describe('SearchBar', () => {
         });
 
         it('should pass correct arguments', () => {
-            expect(props.onSearch.firstCall.args[0]).toEqual(component.state().model[property]);
+            expect(props.onSearch.firstCall.args[0]).toEqual(
+                component.state().model[property]
+            );
         });
     });
 });

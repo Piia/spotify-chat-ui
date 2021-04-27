@@ -11,7 +11,7 @@ const SearchResult = ({ tracks, loading, onPlay, error }) => {
     if (loading) {
         return (
             <TrackList>
-                <Spinner size={ 2 } style={{ margin: '2em auto' }} />
+                <Spinner size={2} style={{ margin: '2em auto' }} />
             </TrackList>
         );
     }
@@ -19,7 +19,7 @@ const SearchResult = ({ tracks, loading, onPlay, error }) => {
         console.log(error);
         return (
             <TrackList>
-                <ErrorPage message={ error.message || error } />
+                <ErrorPage message={error.message || error} />
             </TrackList>
         );
     }
@@ -31,18 +31,20 @@ const SearchResult = ({ tracks, loading, onPlay, error }) => {
                     return null;
                 }
                 return (
-                    <TrackItem 
-                        key={ track.id } 
-                        imageUrl={ track.album
-                            && track.album.images
-                            && track.album.images[IMAGE_URL_INDEX]
-                            ? track.album.images[IMAGE_URL_INDEX].url
-                            : null } 
-                        track={ track.name } 
-                        artists={ track.artists.map(artist => artist.name) }
-                        album={ track.album.name }
-                        text={ track.album.name }
-                        onPlay={ () => onPlay(track) }
+                    <TrackItem
+                        key={track.id}
+                        imageUrl={
+                            track.album &&
+                            track.album.images &&
+                            track.album.images[IMAGE_URL_INDEX]
+                                ? track.album.images[IMAGE_URL_INDEX].url
+                                : null
+                        }
+                        track={track.name}
+                        artists={track.artists.map(artist => artist.name)}
+                        album={track.album.name}
+                        text={track.album.name}
+                        onPlay={() => onPlay(track)}
                     />
                 );
             })}

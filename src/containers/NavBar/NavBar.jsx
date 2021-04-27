@@ -44,8 +44,10 @@ export class NavBar extends PureComponent {
         return (
             <Navigation>
                 <NavList>
-                    <NavItem><Header>Spotify chat</Header></NavItem>
-                    <NavItem right>{ profile && profile.displayName }</NavItem>
+                    <NavItem>
+                        <Header>Spotify chat</Header>
+                    </NavItem>
+                    <NavItem right>{profile && profile.displayName}</NavItem>
                 </NavList>
             </Navigation>
         );
@@ -57,7 +59,7 @@ NavBar.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    profile: state.profile.profileData
+    profile: state.profile.profileData,
 });
 
 export default connect(mapStateToProps)(NavBar);

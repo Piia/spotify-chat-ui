@@ -9,7 +9,9 @@ const Bar = styled.div`
     height: 3rem;
 
     & > input {
-        padding: ${props => props.theme.spacing.xs} 65px ${props => props.theme.spacing.xs} ${props => props.theme.spacing.md};
+        padding: ${props => props.theme.spacing.xs} 65px
+            ${props => props.theme.spacing.xs}
+            ${props => props.theme.spacing.md};
     }
 `;
 Bar.displayName = 'Bar';
@@ -36,43 +38,45 @@ Search.displayName = 'Search';
 
 class SearchBar extends PureComponent {
     state = {
-        model: {}
+        model: {},
     };
 
     property = 'trackName';
 
     handleInputChange = (property, value) => {
-        this.setState(oldState => ({ model: { ...oldState.model, [property]: value } }))
+        this.setState(oldState => ({
+            model: { ...oldState.model, [property]: value },
+        }));
     };
 
     handleKeyPress = event => {
         if (event && event.key === 'Enter') {
             this.submitSearch();
-        };
+        }
     };
 
     submitSearch = () => {
         const searchWord = this.state.model[this.property];
-        if (searchWord && searchWord.length > 0) {
+        if (searchWord && searchWord.length > 0) {
             this.props.onSearch(searchWord);
-        };
+        }
     };
 
     render() {
         return (
             <Bar>
                 <SearchInput
-                    onChange={ this.handleInputChange }
-                    onKeyPress={ this.handleKeyPress }
-                    property={ this.property }
-                    model={ this.state.model }
+                    onChange={this.handleInputChange}
+                    onKeyPress={this.handleKeyPress}
+                    property={this.property}
+                    model={this.state.model}
                     placeholder="Search tracks"
                 />
-                <Search onClick={ this.submitSearch }>Search</Search>
+                <Search onClick={this.submitSearch}>Search</Search>
             </Bar>
         );
-    };
-};
+    }
+}
 
 SearchBar.propTypes = {
     onSearch: PropTypes.func.isRequired,

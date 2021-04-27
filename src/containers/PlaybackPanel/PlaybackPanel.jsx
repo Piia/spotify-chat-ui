@@ -2,13 +2,12 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { throttle } from 'lodash';
+import { throttle } from 'lodash';
 
 import PanelImage from 'components/PanelImage/PanelImage';
 import PlayButton from 'components/PlayButton/PlayButton';
 import Playback from 'components/Playback/Playback';
 import { updatePlaybackState } from 'redux/playback/playback';
-
 
 const Panel = styled.section`
     background-color: ${props => props.theme.colors.cosmic};
@@ -29,37 +28,49 @@ const RowWrapper = styled.div`
 `;
 RowWrapper.displayName = 'RowWrapper';
 
-
 class PlaybackPanel extends PureComponent {
     timerRef = null;
 
     updatePlaybackThrottled = throttle(this.props.updatePlaybackState, 200);
 
     componentDidUpdate() {
-        const { playback: { currentTrack, isPlaying, timestamp, progressMillis } } = this.props;
+        const {
+            playback: { currentTrack, isPlaying, timestamp, progressMillis },
+        } = this.props;
         if (this.timerRef) {
             clearTimeout(this.timerRef);
         }
-        if (!isPlaying || !currentTrack || currentTrack.durationMs === undefined) {
+        if (
+            !isPlaying ||
+            !currentTrack ||
+            currentTrack.durationMs === undefined
+        ) {
             return;
         }
-        const trackShouldEnd = 
-            currentTrack.durationMs - (new Date().getTime() - timestamp + progressMillis);
+        const trackShouldEnd =
+            currentTrack.durationMs -
+            (new Date().getTime() - timestamp + progressMillis);
 
-        this.timerRef = setTimeout(this.updatePlaybackThrottled, trackShouldEnd);    
+        this.timerRef = setTimeout(
+            this.updatePlaybackThrottled,
+            trackShouldEnd
+        );
     }
 
     render() {
-        const { playback: { currentTrack }, playback } = this.props;
+        const {
+            playback: { currentTrack },
+            playback,
+        } = this.props;
 
         const albumUrl = currentTrack ? currentTrack.album.images[0].url : null;
 
         return (
             <Panel>
-                <PanelImage url={ albumUrl } />
+                <PanelImage url={albumUrl} />
                 <RowWrapper>
                     <PlayButton />
-                    <Playback playback={ playback } />
+                    <Playback playback={playback} />
                 </RowWrapper>
             </Panel>
         );
@@ -72,10 +83,10 @@ PlaybackPanel.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    playback: state.playback.playback
+    playback: state.playback.playback,
 });
 const mapDispatchToProps = dispatch => ({
-    updatePlaybackState: () => dispatch(updatePlaybackState())
+    updatePlaybackState: () => dispatch(updatePlaybackState()),
 });
 const connected = connect(mapStateToProps, mapDispatchToProps);
 

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-
 export const StyledImage = styled.img`
     width: auto;
     height: 100%;
@@ -18,17 +17,17 @@ Placeholder.displayName = 'Placeholder';
 
 const PanelImage = ({ url }) => {
     if (!url) {
-        return <Placeholder />
+        return <Placeholder />;
     }
-    return <StyledImage src={ url } />
+    return <StyledImage src={url} />;
 };
 
 PanelImage.defaultProps = {
-    url: null
+    url: null,
 };
 
 PanelImage.propTypes = {
-    url: PropTypes.string
+    url: PropTypes.string,
 };
 
 export default PanelImage;

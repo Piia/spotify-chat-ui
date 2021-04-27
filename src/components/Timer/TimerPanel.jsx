@@ -20,12 +20,14 @@ const Time = styled.span`
 `;
 Time.displayName = 'Time';
 
-
-const TimerPanel = ({ isPlaying, progressMillis, trackDurationMillis }) =>
+const TimerPanel = ({ isPlaying, progressMillis, trackDurationMillis }) => (
     <TimerWrapper>
-        <Time><Timer isPlaying={ isPlaying } progressMillis={ progressMillis } /></Time>
-        <Time>{ format(trackDurationMillis) }</Time>
-    </TimerWrapper>;
+        <Time>
+            <Timer isPlaying={isPlaying} progressMillis={progressMillis} />
+        </Time>
+        <Time>{format(trackDurationMillis)}</Time>
+    </TimerWrapper>
+);
 
 TimerPanel.displayName = 'TimerPanel';
 
@@ -39,6 +41,6 @@ TimerPanel.propTypes = {
     isPlaying: PropTypes.bool,
     progressMillis: PropTypes.number,
     trackDuratioMillis: PropTypes.number,
-}
+};
 
 export default TimerPanel;

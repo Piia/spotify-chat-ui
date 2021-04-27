@@ -8,8 +8,6 @@ storiesOf('Spinner', module)
     .addDecorator(withKnobs)
     .add('default', () => {
         const size = number('Size (em)', 7);
-        return <Spinner size={ size } />;
+        return <Spinner size={size} />;
     })
-    .add('SpinnerPage', () => (
-        <SpinnerPage />
-    )); 
+    .add('SpinnerPage', () => <SpinnerPage />);

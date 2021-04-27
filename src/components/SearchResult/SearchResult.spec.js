@@ -12,7 +12,7 @@ describe('SearchResult', () => {
             onPlay: spy(),
             tracks,
         };
-        component = shallow(<SearchResult { ...props } />);
+        component = shallow(<SearchResult {...props} />);
     });
 
     it('should render component', () => {
@@ -35,17 +35,17 @@ describe('SearchResult', () => {
                 tracks,
                 loading: true,
             };
-            component = shallow(<SearchResult { ...props } />);
+            component = shallow(<SearchResult {...props} />);
         });
 
         it('should render component', () => {
             expect(component).toExist();
         });
-    
+
         it('should render TrackList', () => {
             expect(component.find(TrackList)).toExist();
         });
-    
+
         it('should render Spinner', () => {
             expect(component.find(Spinner)).toExist();
         });

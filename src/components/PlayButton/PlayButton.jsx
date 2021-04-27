@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { resume, pause } from 'redux/playback/playback';
 
-
 const Button = styled.button`
     display: inline-flex;
     justify-content: center;
@@ -18,7 +17,7 @@ const Button = styled.button`
     color: ${props => props.theme.colors.black};
     text-align: center;
     font-family: ${props => props.theme.font.family.arial};
-    transition: background-color 0.2s ease-in;;
+    transition: background-color 0.2s ease-in;
 
     &:hover {
         cursor: pointer;
@@ -52,13 +51,13 @@ class PlayButton extends PureComponent {
 
     componentDidMount() {
         this.resetPlay();
-    };
+    }
 
     componentDidUpdate(prevProps) {
         if (this.props.isPlaying !== prevProps.isPlaying) {
             this.resetPlay();
         }
-    };
+    }
 
     resetPlay = () => {
         this.setState({ play: this.props.isPlaying });
@@ -83,20 +82,24 @@ class PlayButton extends PureComponent {
         const isPlaying = this.state.play;
 
         return (
-            <Button onClick={ isPlaying ? this.handlePause : this.handleResume }>
-                {isPlaying ? <Pause>{ pauseIcon }</Pause> : <Play>{ playIcon }</Play>}
+            <Button onClick={isPlaying ? this.handlePause : this.handleResume}>
+                {isPlaying ? (
+                    <Pause>{pauseIcon}</Pause>
+                ) : (
+                    <Play>{playIcon}</Play>
+                )}
             </Button>
         );
-    };
-};
+    }
+}
 
 const mapStateToProps = state => ({
-    isPlaying: state.playback.playback.isPlaying
+    isPlaying: state.playback.playback.isPlaying,
 });
 const mapDispatchToProps = dispatch => ({
     resume: () => dispatch(resume()),
-    pause: () => dispatch(pause())
-})
+    pause: () => dispatch(pause()),
+});
 const connected = connect(mapStateToProps, mapDispatchToProps);
 
 export default connected(PlayButton);

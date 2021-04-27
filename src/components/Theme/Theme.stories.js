@@ -6,12 +6,11 @@ import { ThemeColors, ThemeFonts } from './Theme';
 
 console.log('theme', theme);
 
-storiesOf('Theme', module)
-    .add('default', () => (
-        <ThemeProvider theme={ theme }>
-            <div>
-                <ThemeColors />
-                <ThemeFonts />
-            </div>
-        </ThemeProvider>
-    )); 
+storiesOf('Theme', module).add('default', () => (
+    <ThemeProvider theme={theme}>
+        <div>
+            <ThemeColors />
+            <ThemeFonts />
+        </div>
+    </ThemeProvider>
+));

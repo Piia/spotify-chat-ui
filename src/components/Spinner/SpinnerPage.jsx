@@ -12,11 +12,12 @@ const Container = styled.div`
     height: 100%;
 `;
 
-const SpinnerPage = () =>
+const SpinnerPage = () => (
     <Fade>
         <Container>
             <Spinner />
         </Container>
-    </Fade>;
+    </Fade>
+);
 
 export default SpinnerPage;

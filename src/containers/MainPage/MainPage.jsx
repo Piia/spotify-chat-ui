@@ -25,7 +25,6 @@ const Wrapper = styled.div`
 Wrapper.displayName = 'Wrapper';
 
 export class MainPage extends PureComponent {
-
     componentDidMount() {
         this.props.loadProfile();
         this.props.updatePlaybackState();
@@ -49,11 +48,11 @@ export class MainPage extends PureComponent {
 
 MainPage.propTypes = {
     loadProfile: PropTypes.func.isRequired,
-}
+};
 
 const mapDispatchToProps = dispatch => ({
     loadProfile: () => dispatch(loadProfile()),
-    updatePlaybackState: () => dispatch(updatePlaybackState())
+    updatePlaybackState: () => dispatch(updatePlaybackState()),
 });
 const connector = connect(null, mapDispatchToProps);
 

@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-
 const StyledImage = styled.img`
     width: ${props => props.width}px;
     min-width: ${props => props.width}px;
@@ -22,9 +21,9 @@ Placeholder.displayName = 'Placeholder';
 
 const Image = ({ url, width, height }) => {
     if (!url) {
-        return <Placeholder width={ width } height={ height } />
+        return <Placeholder width={width} height={height} />;
     }
-    return <StyledImage src={ url } width={ width } height={ height } />
+    return <StyledImage src={url} width={width} height={height} />;
 };
 
 Image.defaultProps = {

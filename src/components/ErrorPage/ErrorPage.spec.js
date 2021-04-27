@@ -8,7 +8,7 @@ describe('ErrorPage', () => {
     });
 
     it('should render component with message', () => {
-        const message = 'This is Error' ;
+        const message = 'This is Error';
         component.setProps({ message });
 
         expect(component).toExist();
@@ -17,9 +17,11 @@ describe('ErrorPage', () => {
     });
 
     it('should render default message', () => {
-        const defaultMessage = 'Something went wrong' ;
+        const defaultMessage = 'Something went wrong';
 
         expect(component).toExist();
-        expect(component.find('ErrorText').children().text()).toEqual(defaultMessage);
+        expect(component.find('ErrorText').children().text()).toEqual(
+            defaultMessage
+        );
     });
 });

@@ -11,7 +11,7 @@ describe('SearchInput', () => {
             onChange: spy(),
         };
 
-        component = shallow(<SearchInput { ...props } />);
+        component = shallow(<SearchInput {...props} />);
     });
 
     it('should render component', () => {

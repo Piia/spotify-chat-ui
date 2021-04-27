@@ -7,7 +7,8 @@ const spin = keyframes`
 `;
 
 const Spinner = styled.div`
-    border: ${props => `${Math.round(props.size * 16 / 7)}px`} solid ${props => props.theme.colors.strikemaster};
+    border: ${props => `${Math.round((props.size * 16) / 7)}px`} solid
+        ${props => props.theme.colors.strikemaster};
     border-top-color: ${props => props.theme.colors.magnolia};
     border-radius: 50%;
     width: ${props => `${props.size * 16}px`};
@@ -17,10 +18,10 @@ const Spinner = styled.div`
 
 Spinner.defaultProps = {
     size: 7,
-}
+};
 
 Spinner.propTypes = {
     size: PropTypes.number,
-}
+};
 
 export default Spinner;

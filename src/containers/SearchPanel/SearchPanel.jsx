@@ -21,12 +21,12 @@ class SearchPanel extends PureComponent {
 
         return (
             <Panel>
-                <SearchBar onSearch={ searchTracks } />
+                <SearchBar onSearch={searchTracks} />
                 <SearchResult
-                    tracks={ tracks }
-                    onPlay={ playTrack }
-                    loading={ loading }
-                    error={ error }
+                    tracks={tracks}
+                    onPlay={playTrack}
+                    loading={loading}
+                    error={error}
                 />
             </Panel>
         );

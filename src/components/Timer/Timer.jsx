@@ -4,8 +4,8 @@ import { format } from './utils';
 
 class Timer extends PureComponent {
     state = {
-        time: 0
-    }
+        time: 0,
+    };
 
     timerRef = null;
 
@@ -22,28 +22,29 @@ class Timer extends PureComponent {
 
         if (!this.timerRef && isPlaying) {
             this.setTimer();
-        }
-        else if (this.timerRef && !isPlaying) {
+        } else if (this.timerRef && !isPlaying) {
             this.clearTimer();
         }
     }
 
     setTimer = () => {
-        this.timerRef = setInterval(() => { this.incrementTime(); }, 1000);
-    }
+        this.timerRef = setInterval(() => {
+            this.incrementTime();
+        }, 1000);
+    };
 
     clearTimer = () => {
         clearInterval(this.timerRef);
         this.timerRef = null;
-    }
+    };
 
     incrementTime = () => {
         this.setState(oldState => ({ time: oldState.time + 1000 }));
-    }
+    };
 
     setTimeTo = millis => {
         this.setState({ time: millis });
-    }
+    };
 
     render() {
         return format(this.state.time);

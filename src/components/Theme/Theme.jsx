@@ -31,17 +31,19 @@ const ThemeRow = styled.li`
 `;
 const colors = props => {
     console.log('ThemeColors', props);
-    return <ul>{ Object.keys(props.theme.colors).map(colorName =>
-        <ThemeRow key={ colorName }>
-            <Color color={ props.theme.colors[colorName] } />
-            <ColorLabel>{ colorName }</ColorLabel>
-        </ThemeRow>
-    ) }
-    </ul>
+    return (
+        <ul>
+            {Object.keys(props.theme.colors).map(colorName => (
+                <ThemeRow key={colorName}>
+                    <Color color={props.theme.colors[colorName]} />
+                    <ColorLabel>{colorName}</ColorLabel>
+                </ThemeRow>
+            ))}
+        </ul>
+    );
 };
 
 export const ThemeColors = withTheme(colors);
-
 
 const FontLabel = styled.span`
     font-family: ${props => props.font};
@@ -50,12 +52,17 @@ const FontLabel = styled.span`
 `;
 const fonts = props => {
     console.log('ThemeFonts', props);
-    return <ul>{ Object.keys(props.theme.font.family).map(fontName =>
-        <ThemeRow key={ fontName }>
-            <FontLabel font={ props.theme.font.family[fontName] }>{ fontName }</FontLabel>
-        </ThemeRow>
-    ) }
-    </ul>;
+    return (
+        <ul>
+            {Object.keys(props.theme.font.family).map(fontName => (
+                <ThemeRow key={fontName}>
+                    <FontLabel font={props.theme.font.family[fontName]}>
+                        {fontName}
+                    </FontLabel>
+                </ThemeRow>
+            ))}
+        </ul>
+    );
 };
 
 export const ThemeFonts = withTheme(fonts);

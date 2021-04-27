@@ -13,10 +13,10 @@ storiesOf('SearchResult', module)
 
         return (
             <SearchResult
-                tracks={ tracks }
-                onPlay={ action('play') }
-                loading={ loading }
-                error={ error ? { message: 'Error message' } : {} }
+                tracks={tracks}
+                onPlay={action('play')}
+                loading={loading}
+                error={error ? { message: 'Error message' } : {}}
             />
-        )
-    }); 
+        );
+    });

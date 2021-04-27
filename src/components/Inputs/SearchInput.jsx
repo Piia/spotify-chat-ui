@@ -11,30 +11,37 @@ const Input = styled.input`
     font-weight: ${props => props.theme.font.weight.normal};
     line-height: 1.5;
     color: ${props => props.theme.colors.varden};
-    padding: ${props => props.theme.spacing.xs} ${props => props.theme.spacing.md};
+    padding: ${props => props.theme.spacing.xs}
+        ${props => props.theme.spacing.md};
     border-radius: 2em;
     border: 1px solid ${props => props.theme.colors.black};
     appearance: none;
-    
+
     &:focus {
         outline: none;
         border: 1px solid ${props => props.theme.colors.varden};
     }
 `;
 
-const SearchInput = ({ model, property, onChange, onKeyPress, placeholder, disabled }) => {
-
+const SearchInput = ({
+    model,
+    property,
+    onChange,
+    onKeyPress,
+    placeholder,
+    disabled,
+}) => {
     return (
         <Input
-            value={ model && property && model[property] }
-            onChange={ (event) => onChange(property, event.target.value) }
-            onKeyPress={ onKeyPress }
-            placeholder={ placeholder }
-            disabled={ disabled }
+            value={model && property && model[property]}
+            onChange={event => onChange(property, event.target.value)}
+            onKeyPress={onKeyPress}
+            placeholder={placeholder}
+            disabled={disabled}
             spellCheck="false"
         />
     );
-}
+};
 
 SearchInput.defaultProps = {
     placeholder: '...',
@@ -49,6 +56,6 @@ SearchInput.propTypes = {
     onKeyPress: PropTypes.func,
     placeholder: PropTypes.string,
     disabled: PropTypes.bool,
-}
+};
 
 export default SearchInput;

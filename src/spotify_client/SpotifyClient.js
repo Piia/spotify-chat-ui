@@ -1,52 +1,70 @@
 import axios from 'axios';
 
-
 axios.defaults.withCredentials = true;
-
 
 class SpotifyClient {
     static getMyProfile() {
-        return axios.get(`${process.env.REACT_APP_BACKEND_BASEPATH}/user/profile`)
+        return axios.get(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/user/profile`
+        );
     }
 
     static postAuthenticate(authorizationCode) {
-        return axios.post(`${process.env.REACT_APP_BACKEND_BASEPATH}/authenticate`, {
-            authorizationCode: authorizationCode
-        });
+        return axios.post(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/authenticate`,
+            {
+                authorizationCode: authorizationCode,
+            }
+        );
     }
 
     static getAccessTokenLifetime() {
-        return axios.get(`${process.env.REACT_APP_BACKEND_BASEPATH}/accessToken/lifeTime`);
+        return axios.get(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/accessToken/lifeTime`
+        );
     }
 
     static postAccessTokenRefresh() {
-        return axios.post(`${process.env.REACT_APP_BACKEND_BASEPATH}/accessToken/refresh`);
+        return axios.post(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/accessToken/refresh`
+        );
     }
 
     static searchTracks(trackName) {
-        return axios.get(`${process.env.REACT_APP_BACKEND_BASEPATH}/search/track`, {
-            params: { name: trackName }
-        });
+        return axios.get(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/search/track`,
+            {
+                params: { name: trackName },
+            }
+        );
     }
 
     static playTrack(trackUri) {
-        return axios.put(`${process.env.REACT_APP_BACKEND_BASEPATH}/playback/play/track`, {
-            trackUri: trackUri
-        });
+        return axios.put(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/playback/play/track`,
+            {
+                trackUri: trackUri,
+            }
+        );
     }
 
     static pausePlayback() {
-        return axios.put(`${process.env.REACT_APP_BACKEND_BASEPATH}/playback/pause`);
+        return axios.put(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/playback/pause`
+        );
     }
 
     static resumePlayback() {
-        return axios.put(`${process.env.REACT_APP_BACKEND_BASEPATH}/playback/resume`);
+        return axios.put(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/playback/resume`
+        );
     }
 
     static getPlaybackState() {
-        return axios.get(`${process.env.REACT_APP_BACKEND_BASEPATH}/playback/state`);
+        return axios.get(
+            `${process.env.REACT_APP_BACKEND_BASEPATH}/playback/state`
+        );
     }
-
 }
 
 export default SpotifyClient;

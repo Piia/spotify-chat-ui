@@ -5,7 +5,6 @@ import { map } from 'lodash';
 import ProgressBar from 'components/ProgressBar/ProgressBar';
 import TimerPanel from 'components/Timer/TimerPanel';
 
-
 const Container = styled.div`
     display: flex;
     flex-flow: column nowrap;
@@ -51,28 +50,32 @@ const Artist = styled.span`
     font-size: ${props => props.theme.font.size.sm};
     font-weight: ${props => props.theme.font.weight.normal};
     color: ${props => props.theme.colors.black};
-    padding: 0 ${props => props.theme.spacing.xs} ${props => props.theme.spacing.xs};
+    padding: 0 ${props => props.theme.spacing.xs}
+        ${props => props.theme.spacing.xs};
 `;
 Artist.displayName = 'Artist';
 
-
 const Playback = props => {
-    const { playback: { currentTrack, isPlaying, progressMillis } } = props;
+    const {
+        playback: { currentTrack, isPlaying, progressMillis },
+    } = props;
     const trackDurationMillis = currentTrack ? currentTrack.durationMs : 0;
 
     return (
         <Container>
             <span>
-                <Name>{ currentTrack && currentTrack.name }</Name>
-                <Album>&nbsp;- { currentTrack && currentTrack.album.name }</Album>
+                <Name>{currentTrack && currentTrack.name}</Name>
+                <Album>&nbsp;- {currentTrack && currentTrack.album.name}</Album>
             </span>
-            <Artist>{ currentTrack && map(currentTrack.artists, 'name').join(', ') }</Artist>
+            <Artist>
+                {currentTrack && map(currentTrack.artists, 'name').join(', ')}
+            </Artist>
             <BarWrapper>
                 <ProgressBar />
                 <TimerPanel
-                    isPlaying={ isPlaying }
-                    progressMillis={ progressMillis }
-                    trackDurationMillis={ trackDurationMillis }
+                    isPlaying={isPlaying}
+                    progressMillis={progressMillis}
+                    trackDurationMillis={trackDurationMillis}
                 />
             </BarWrapper>
         </Container>

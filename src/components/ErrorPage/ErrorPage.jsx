@@ -11,7 +11,7 @@ const ErrorText = styled.p`
 `;
 ErrorText.displayName = 'ErrorText';
 
-const ErrorPage = ({ message }) => <ErrorText>{ message }</ErrorText>;
+const ErrorPage = ({ message }) => <ErrorText>{message}</ErrorText>;
 
 ErrorPage.defaultProps = {
     message: 'Something went wrong',

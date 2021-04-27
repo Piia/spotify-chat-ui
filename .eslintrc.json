@@ -1,5 +1,5 @@
 {
-    "extends": "react-app",
+    "extends": ["react-app", "plugin:prettier/recommended"],
     "globals": {
         "shallow": "readonly",
         "render": "readonly",
@@ -8,6 +8,13 @@
         "stub": "readonly"
     },
     "rules": {
-        "indent": ["error", 4]
+        "indent": ["error", 4],
+        "prettier/prettier": [
+            "error",
+            {},
+            {
+                "usePrettierrc": true
+            }
+        ]
     }
 }

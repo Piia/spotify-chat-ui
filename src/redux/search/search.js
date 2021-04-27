@@ -1,12 +1,10 @@
 import SpotifyClient from 'spotify_client/SpotifyClient';
 
-
 const initialState = {
     tracks: [],
     loading: false,
-    error: {}
-}
-
+    error: {},
+};
 
 const SEARCH_TRACKS = 'search/SEARCH_TRACKS';
 const SEARCH_TRACKS_SUCCESS = 'search/SEARCH_TRACKS_SUCCESS';
@@ -30,29 +28,30 @@ export const searchTracks = trackName => {
                 type: SEARCH_TRACKS_SUCCESS,
                 result: result.data,
             });
-        } catch(error) {
+        } catch (error) {
             return dispatch({
                 type: SEARCH_TRACKS_FAIL,
                 error: error,
             });
         }
     };
-}
+};
 
-export const searchReducer = (state = initialState, action) => ({
-    [SEARCH_TRACKS]: ({
-        ...state,
-        loading: true,
-    }),
-    [SEARCH_TRACKS_SUCCESS]: ({
-        ...state,
-        tracks: action.result ? action.result.items : [],
-        loading: false,
-        error: {},
-    }),
-    [SEARCH_TRACKS_FAIL]: ({
-        ...state,
-        loading: false,
-        error: action.error,
-    }),
-})[action.type] || state;
+export const searchReducer = (state = initialState, action) =>
+    ({
+        [SEARCH_TRACKS]: {
+            ...state,
+            loading: true,
+        },
+        [SEARCH_TRACKS_SUCCESS]: {
+            ...state,
+            tracks: action.result ? action.result.items : [],
+            loading: false,
+            error: {},
+        },
+        [SEARCH_TRACKS_FAIL]: {
+            ...state,
+            loading: false,
+            error: action.error,
+        },
+    }[action.type] || state);

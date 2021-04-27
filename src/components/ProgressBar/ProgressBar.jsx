@@ -2,10 +2,9 @@ import React, { PureComponent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { connect } from 'react-redux';
 
-
 const BarOutline = styled.div`
     border: 0.2em solid black;
-    border-radius: 1.5em; 
+    border-radius: 1.5em;
     height: 0.7em;
 `;
 
@@ -19,52 +18,57 @@ const Bar = styled.div`
     height: 100%;
     width: ${props => props.initialWidth}%;
     background-color: ${props => props.theme.colors.voodoo};
-    animation: ${props => props.isPlaying && ProgressBarAnimation} ${props => props.animationTime}ms forwards;
+    animation: ${props => props.isPlaying && ProgressBarAnimation}
+        ${props => props.animationTime}ms forwards;
     animation-timing-function: linear;
 `;
 
-
 class ProgressBar extends PureComponent {
     state = {
-        initialWidth: 0
-    }
-    
+        initialWidth: 0,
+    };
+
     componentDidMount() {
         this.setState({
             initialWidth: Math.round(100 * this.getPlaybackPercentage()),
-            animationTime: this.getRemainingPlayBackTimeMillis()
-        })
+            animationTime: this.getRemainingPlayBackTimeMillis(),
+        });
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if(prevProps.playback !== this.props.playback) {
+        if (prevProps.playback !== this.props.playback) {
             this.setState({
                 initialWidth: Math.round(100 * this.getPlaybackPercentage()),
-                animationTime: this.getRemainingPlayBackTimeMillis()
+                animationTime: this.getRemainingPlayBackTimeMillis(),
             });
         }
     }
 
     getPlaybackPercentage() {
-        const { playback: { timestamp, progressMillis, currentTrack } } = this.props;
+        const {
+            playback: { timestamp, progressMillis, currentTrack },
+        } = this.props;
 
-        if(!currentTrack) {
+        if (!currentTrack) {
             return 0;
         }
 
         const { durationMs } = currentTrack;
         const now = new Date().getTime();
-        const relativeProgress = Math.min(1.0, (progressMillis + now - timestamp) / durationMs);
+        const relativeProgress = Math.min(
+            1.0,
+            (progressMillis + now - timestamp) / durationMs
+        );
         return relativeProgress;
     }
 
     getRemainingPlayBackTimeMillis() {
         const currentTrack = this.props.playback.currentTrack;
 
-        if(!currentTrack) {
+        if (!currentTrack) {
             return 0;
         }
-        
+
         const songDuration = currentTrack.durationMs;
         const playbackPercentage = this.getPlaybackPercentage();
         return (1 - playbackPercentage) * songDuration;
@@ -73,14 +77,19 @@ class ProgressBar extends PureComponent {
     render() {
         return (
             <BarOutline>
-                <Bar isPlaying={this.props.playback.isPlaying} key={this.props.playback.timestamp} initialWidth={this.state.initialWidth} animationTime={this.state.animationTime} />
+                <Bar
+                    isPlaying={this.props.playback.isPlaying}
+                    key={this.props.playback.timestamp}
+                    initialWidth={this.state.initialWidth}
+                    animationTime={this.state.animationTime}
+                />
             </BarOutline>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    playback: state.playback.playback
+    playback: state.playback.playback,
 });
 
 export default connect(mapStateToProps)(ProgressBar);

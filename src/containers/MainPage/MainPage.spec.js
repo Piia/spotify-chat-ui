@@ -12,9 +12,9 @@ describe('MainPage', () => {
             loggedIn: false,
             loadProfile: () => {},
             updatePlaybackState: () => {},
-        }
-        component = shallow(<MainPage { ...props } />);
-    })
+        };
+        component = shallow(<MainPage {...props} />);
+    });
 
     it('should render component', () => {
         expect(component).toExist();

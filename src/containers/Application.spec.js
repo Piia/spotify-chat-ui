@@ -6,7 +6,7 @@ describe('Application', () => {
 
     beforeEach(() => {
         component = shallow(<Application />);
-    })
+    });
 
     it('should render component', () => {
         expect(component).toExist();
