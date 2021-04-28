@@ -24,7 +24,7 @@ const Message = styled.p`
     color: ${props => props.theme.colors.varden};
 `;
 
-const ChatMessage: FC<MessageType> = (message: MessageType) => {
+const ChatMessage: FC<MessageType> = message => {
     return (
         <Container>
             <Title>
