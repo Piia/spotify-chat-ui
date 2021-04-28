@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import SearchBar from './SearchBar';
 import { theme } from 'styles/theme';
 
-storiesOf('SearchBar', module).add('default', props => (
+storiesOf('SearchBar', module).add('default', () => (
     <div style={{ padding: '3em', backgroundColor: theme.colors.goblin }}>
         <SearchBar onSearch={action('search')} />
     </div>

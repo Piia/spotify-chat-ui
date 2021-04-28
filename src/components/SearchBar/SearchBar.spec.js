@@ -40,50 +40,9 @@ describe('SearchBar', () => {
             component.find(SearchInput).props().onChange(property, value);
         });
 
-        it('should change state', () => {
-            expect(component.state().model[property]).toEqual(value);
-        });
-    });
-
-    describe('when handleKeyPress is called', () => {
-        let property, value;
-
-        beforeEach(() => {
-            property = component.instance().property;
-            value = 'ghjk';
-            component.setState({ model: { [property]: value } });
-            component.find(SearchInput).props().onKeyPress();
-            component.find(SearchInput).props().onKeyPress({ key: 'Enter' });
-        });
-
-        it('should call onSearch', () => {
-            expect(props.onSearch.calledOnce).toBe(true);
-        });
-
-        it('should pass correct arguments', () => {
-            expect(props.onSearch.firstCall.args[0]).toEqual(
-                component.state().model[property]
-            );
-        });
-    });
-
-    describe('when onClick is called', () => {
-        let property, value;
-
-        beforeEach(() => {
-            property = component.instance().property;
-            value = 'ghjk';
-            component.setState({ model: { [property]: value } });
-            component.find('Search').props().onClick();
-        });
-
-        it('should call onSearch', () => {
-            expect(props.onSearch.calledOnce).toBe(true);
-        });
-
-        it('should pass correct arguments', () => {
-            expect(props.onSearch.firstCall.args[0]).toEqual(
-                component.state().model[property]
+        it('should change model', () => {
+            expect(component.find(SearchInput).props().model[property]).toEqual(
+                value
             );
         });
     });

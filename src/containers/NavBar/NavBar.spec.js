@@ -1,5 +1,10 @@
 import React from 'react';
-import { NavBar } from './NavBar';
+import NavBar from './NavBar';
+
+jest.mock('react-redux', () => ({
+    __esModule: true,
+    useSelector: () => {},
+}));
 
 describe('NavBar', () => {
     let component, props;

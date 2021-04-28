@@ -1,69 +1,59 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { checkLogin, refreshAccessToken } from 'redux/login/login';
 import SpinnerPage from 'components/Spinner/SpinnerPage';
 
-class LoginChecker extends Component {
-    // refresh every 15 minutes
-    static REFRESH_TIMER_INTERVAL = 9000000;
+// refresh every 15 minutes
+const REFRESH_TIMER_INTERVAL = 9000000;
 
-    // when we see token lifetime below this, we refresh immediately
-    // 1000 seconds ~ 16 minutes
-    static MUST_REFRESH_NOW_THRESHOLD = 1000;
+// when we see token lifetime below this, we refresh immediately
+// 1000 seconds ~ 16 minutes
+const MUST_REFRESH_NOW_THRESHOLD = 1000;
 
-    refreshInterval = null;
+const LoginChecker = ({ children }) => {
+    const dispatch = useDispatch();
+    const refreshInterval = React.useRef(null);
 
-    setRefreshInterval() {
-        this.refreshInterval = setInterval(
-            this.props.refreshAccessToken,
-            LoginChecker.REFRESH_TIMER_INTERVAL
+    const checkingLogin = useSelector(state => state.login.checkingLogin);
+    const loggedIn = useSelector(state => state.login.loggedIn);
+    const tokenExpiresIn = useSelector(state => state.login.tokenExpiresIn);
+
+    const handleCheckLogin = () => dispatch(checkLogin());
+    const handleRefreshAccessToken = () => dispatch(refreshAccessToken());
+
+    const setRefreshInterval = () => {
+        refreshInterval.current = setInterval(
+            handleRefreshAccessToken,
+            REFRESH_TIMER_INTERVAL
         );
-    }
+    };
 
-    componentDidMount() {
-        this.props.checkLogin();
-    }
+    React.useEffect(() => {
+        handleCheckLogin();
 
-    componentWillUnmount() {
-        if (this.refreshInterval !== null) {
-            clearInterval(this.refreshInterval);
-        }
-    }
-
-    componentDidUpdate(prevProps) {
-        if (!prevProps.loggedIn && this.props.loggedIn) {
-            this.refreshInterval = this.setRefreshInterval();
-            if (
-                this.props.tokenExpiresIn <
-                LoginChecker.MUST_REFRESH_NOW_THRESHOLD
-            ) {
-                this.props.refreshAccessToken();
+        return () => {
+            if (refreshInterval.current !== null) {
+                clearInterval(refreshInterval.current);
             }
-        } else if (prevProps.loggedIn && !this.props.loggedIn) {
-            clearInterval(this.refreshInterval);
-        }
-    }
+        };
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    render() {
-        if (this.props.checkingLogin) {
-            return <SpinnerPage />;
+    React.useEffect(() => {
+        if (loggedIn) {
+            setRefreshInterval();
+            if (tokenExpiresIn < MUST_REFRESH_NOW_THRESHOLD) {
+                handleRefreshAccessToken();
+            }
         } else {
-            return this.props.children;
+            clearInterval(refreshInterval.current);
         }
+    }, [loggedIn]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (checkingLogin) {
+        return <SpinnerPage />;
+    } else {
+        return children;
     }
-}
+};
 
-const mapDispatchToProps = dispatch => ({
-    checkLogin: () => dispatch(checkLogin()),
-    refreshAccessToken: () => dispatch(refreshAccessToken()),
-});
-
-const mapStateToProps = state => ({
-    checkingLogin: state.login.checkingLogin,
-    loggedIn: state.login.loggedIn,
-    tokenExpiresIn: state.login.tokenExpiresIn,
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(LoginChecker);
+export default LoginChecker;

@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { resume, pause } from 'redux/playback/playback';
 
 const Button = styled.button`
@@ -44,62 +44,38 @@ Pause.displayName = 'Pause';
 const playIcon = '▶';
 const pauseIcon = '▋▋';
 
-class PlayButton extends PureComponent {
-    state = {
-        play: false,
-    };
+const PlayButton = () => {
+    const [play, setPlay] = React.useState(false);
+    const dispatch = useDispatch();
+    const isPlaying = useSelector(state => state.playback.playback.isPlaying);
 
-    componentDidMount() {
-        this.resetPlay();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.isPlaying !== prevProps.isPlaying) {
-            this.resetPlay();
+    React.useEffect(() => {
+        if (isPlaying !== play) {
+            setPlay(isPlaying);
         }
-    }
+    }, [isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    resetPlay = () => {
-        this.setState({ play: this.props.isPlaying });
+    const togglePlay = () => {
+        setPlay(oldState => !oldState);
     };
 
-    togglePlay = () => {
-        this.setState(oldState => ({ play: !oldState.play }));
-    };
-
-    handlePause = event => {
+    const handlePause = event => {
         event.preventDefault();
-        this.togglePlay();
-        this.props.pause();
+        togglePlay();
+        dispatch(pause());
     };
-    handleResume = event => {
+
+    const handleResume = event => {
         event.preventDefault();
-        this.togglePlay();
-        this.props.resume();
+        togglePlay();
+        dispatch(resume());
     };
 
-    render() {
-        const isPlaying = this.state.play;
+    return (
+        <Button onClick={play ? handlePause : handleResume}>
+            {play ? <Pause>{pauseIcon}</Pause> : <Play>{playIcon}</Play>}
+        </Button>
+    );
+};
 
-        return (
-            <Button onClick={isPlaying ? this.handlePause : this.handleResume}>
-                {isPlaying ? (
-                    <Pause>{pauseIcon}</Pause>
-                ) : (
-                    <Play>{playIcon}</Play>
-                )}
-            </Button>
-        );
-    }
-}
-
-const mapStateToProps = state => ({
-    isPlaying: state.playback.playback.isPlaying,
-});
-const mapDispatchToProps = dispatch => ({
-    resume: () => dispatch(resume()),
-    pause: () => dispatch(pause()),
-});
-const connected = connect(mapStateToProps, mapDispatchToProps);
-
-export default connected(PlayButton);
+export default PlayButton;

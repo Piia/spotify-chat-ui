@@ -1,55 +1,47 @@
-import { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from './utils';
 
-class Timer extends PureComponent {
-    state = {
-        time: 0,
+const Timer = ({ isPlaying, progressMillis }) => {
+    const [time, setTime] = React.useState(0);
+
+    const timerRef = React.useRef(null);
+
+    const setTimer = () => {
+        timerRef.current = setInterval(incrementTime, 1000);
     };
 
-    timerRef = null;
+    const clearTimer = () => {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+    };
 
-    componentWillUnmount() {
-        this.clearTimer();
-    }
+    const incrementTime = () => {
+        setTime(oldTime => oldTime + 1000);
+    };
 
-    componentDidUpdate(prevProps) {
-        const { isPlaying, progressMillis } = this.props;
+    const setTimeTo = millis => {
+        setTime(millis);
+    };
 
-        if (progressMillis !== prevProps.progressMillis) {
-            this.setTimeTo(progressMillis);
+    React.useEffect(() => {
+        clearTimer();
+    }, []);
+
+    React.useEffect(() => {
+        setTimeTo(progressMillis);
+    }, [progressMillis]);
+
+    React.useEffect(() => {
+        if (!timerRef.current && isPlaying) {
+            setTimer();
+        } else if (timerRef.current && !isPlaying) {
+            clearTimer();
         }
+    }, [isPlaying]); // eslint-disable-line react-hooks/exhaustive-deps
 
-        if (!this.timerRef && isPlaying) {
-            this.setTimer();
-        } else if (this.timerRef && !isPlaying) {
-            this.clearTimer();
-        }
-    }
-
-    setTimer = () => {
-        this.timerRef = setInterval(() => {
-            this.incrementTime();
-        }, 1000);
-    };
-
-    clearTimer = () => {
-        clearInterval(this.timerRef);
-        this.timerRef = null;
-    };
-
-    incrementTime = () => {
-        this.setState(oldState => ({ time: oldState.time + 1000 }));
-    };
-
-    setTimeTo = millis => {
-        this.setState({ time: millis });
-    };
-
-    render() {
-        return format(this.state.time);
-    }
-}
+    return format(time);
+};
 
 export default Timer;
 
