@@ -1,1 +1,1 @@
-declare module "redux/Store";
+declare module 'redux/Store';

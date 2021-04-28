@@ -1,2 +1,2 @@
-declare module "styles/global";
-declare module "styles/theme";
+declare module 'styles/global';
+declare module 'styles/theme';
