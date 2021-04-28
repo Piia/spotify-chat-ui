@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+# typescript
+/dist
+
 # testing
 /coverage
 
@@ -24,3 +27,4 @@ yarn-error.log*
 
 #editor
 .vscode
+
