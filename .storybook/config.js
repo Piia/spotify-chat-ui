@@ -1,5 +1,5 @@
 import { configure, addDecorator, addParameters } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs/react';
+import { withKnobs } from '@storybook/addon-knobs';
 import React, { Fragment } from 'react';
 
 import { ThemeProvider } from 'styled-components';
