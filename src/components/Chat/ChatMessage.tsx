@@ -1,6 +1,7 @@
-import React from 'react';
+import { FC } from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import { ChatMessage as MessageType } from './Chat.types';
 
 const Container = styled.section`
     border-bottom: 1px solid ${props => props.theme.colors.strikemaster};
@@ -23,7 +24,7 @@ const Message = styled.p`
     color: ${props => props.theme.colors.varden};
 `;
 
-const ChatMessage = ({ message }) => {
+const ChatMessage: FC<MessageType> = message => {
     return (
         <Container>
             <Title>
