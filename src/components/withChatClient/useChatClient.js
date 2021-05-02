@@ -10,6 +10,14 @@ import {
     removeChatter,
 } from 'redux/chat/chat';
 
+const CHAT_URL = `${process.env.REACT_APP_BACKEND_BASEPATH}/chat`;
+
+const EVENT_TYPE = {
+    SUBSCRIBE: 'SUBSCRIBE',
+    UNSUBSCRIBE: 'UNSUBSCRIBE',
+    DISCONNECT: 'DISCONNECT',
+};
+
 const useChatClient = () => {
     const clientRef = React.useRef();
 
@@ -17,9 +25,15 @@ const useChatClient = () => {
         state => state.playback.playback?.currentTrack?.id
     );
 
-    const dispatch = useDispatch();
+    const chatTopics = React.useMemo(
+        () => ({
+            SUBSCRIPTIONS: `/topic/${trackId}.subscriptions`,
+            MESSAGES: `/topic/${trackId}.messages`,
+        }),
+        [trackId]
+    );
 
-    const onConnect = React.useCallback(() => {}, []);
+    const dispatch = useDispatch();
 
     React.useEffect(() => {
         if (trackId) {
@@ -30,56 +44,47 @@ const useChatClient = () => {
 
     const sendChatMessage = React.useCallback(
         message => {
-            if (!trackId || !clientRef.current) return;
-
-            clientRef.current.sendMessage(
-                `/app/chat/${trackId}`,
-                JSON.stringify({ body: message })
-            );
+            if (trackId && clientRef.current) {
+                clientRef.current.sendMessage(
+                    `/app/chat/${trackId}`,
+                    JSON.stringify({ body: message })
+                );
+            }
         },
         [trackId]
     );
 
     const onChatSubscriptionEvent = React.useCallback(
         event => {
-            //TODO move to dispatcher? - maybe one dispatcher chatSubscriptionEvent ?
-
-            const EVENT_SUBSCRIBE = 'SUBSCRIBE';
-            const EVENT_UNSUBSCRIBE = 'UNSUBSCRIBE';
-            const EVENT_DISCONNECT = 'DISCONNECT';
-
-            ({
-                [EVENT_SUBSCRIBE]: userId => dispatch(addChatter(userId)),
-                [EVENT_UNSUBSCRIBE]: userId => dispatch(removeChatter(userId)),
-                [EVENT_DISCONNECT]: userId => dispatch(removeChatter(userId)),
-            }[event.eventType](event.userId));
+            if (event.eventType === EVENT_TYPE.SUBSCRIBE) {
+                dispatch(addChatter(event.userId));
+            } else if (
+                event.eventType === EVENT_TYPE.UNSUBSCRIBE ||
+                event.eventType === EVENT_TYPE.DISCONNECT
+            ) {
+                dispatch(removeChatter(event.userId));
+            }
         },
         [dispatch]
     );
 
     const onMessage = React.useCallback(
         (message, topic) => {
-            const subscriptionsTopic = `/topic/${trackId}.subscriptions`;
-            const messagesTopic = `/topic/${trackId}.messages`;
-
-            // TODO: ANYTHING!!!!
-
-            // dispatch based on topic
-            ({
-                [messagesTopic]: message => dispatch(addMessage(message)),
-                [subscriptionsTopic]: onChatSubscriptionEvent,
-            }[topic](message));
+            if (topic === chatTopics.MESSAGES) {
+                dispatch(addMessage(message));
+            } else if (topic === chatTopics.SUBSCRIPTIONS) {
+                onChatSubscriptionEvent(message);
+            }
         },
-        [trackId, dispatch, onChatSubscriptionEvent]
+        [chatTopics, dispatch, onChatSubscriptionEvent]
     );
+
+    const onConnect = React.useCallback(() => {}, []);
 
     const ClientComponent = () => (
         <SockJsClient
-            url={`${process.env.REACT_APP_BACKEND_BASEPATH}/chat`}
-            topics={[
-                `/topic/${trackId}.subscriptions`,
-                `/topic/${trackId}.messages`,
-            ]}
+            url={CHAT_URL}
+            topics={Object.values(chatTopics)}
             onMessage={onMessage}
             onConnect={onConnect}
             ref={clientRef}
