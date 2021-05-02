@@ -64,7 +64,7 @@ const Chat = ({ sendChatMessage }) => {
                 <ChatterList>
                     <ChatterListHeading>Listeners</ChatterListHeading>
                     {chatters.map(chatter => (
-                        <ChatSubscriber chatter={{ chatter }} />
+                        <ChatSubscriber chatter={chatter} key={chatter} />
                     ))}
                 </ChatterList>
             </HorizontalWrapper>
