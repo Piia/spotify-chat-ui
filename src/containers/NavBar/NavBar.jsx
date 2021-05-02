@@ -1,7 +1,6 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Navigation = styled.nav`
     height: 50px;
@@ -37,29 +36,19 @@ const Header = styled.header`
 `;
 Header.displayName = 'Header';
 
-export class NavBar extends PureComponent {
-    render() {
-        const { profile } = this.props;
+const NavBar = () => {
+    const profile = useSelector(state => state.profile.profileData);
 
-        return (
-            <Navigation>
-                <NavList>
-                    <NavItem>
-                        <Header>Spotify chat</Header>
-                    </NavItem>
-                    <NavItem right>{profile && profile.displayName}</NavItem>
-                </NavList>
-            </Navigation>
-        );
-    }
-}
-
-NavBar.propTypes = {
-    profile: PropTypes.object.isRequired,
+    return (
+        <Navigation>
+            <NavList>
+                <NavItem>
+                    <Header>Spotify chat</Header>
+                </NavItem>
+                <NavItem right>{profile && profile.displayName}</NavItem>
+            </NavList>
+        </Navigation>
+    );
 };
 
-const mapStateToProps = state => ({
-    profile: state.profile.profileData,
-});
-
-export default connect(mapStateToProps)(NavBar);
+export default NavBar;

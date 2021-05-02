@@ -15,15 +15,11 @@ const Placeholder = styled.div`
 `;
 Placeholder.displayName = 'Placeholder';
 
-const PanelImage = ({ url }) => {
+const PanelImage = ({ url = null }) => {
     if (!url) {
         return <Placeholder />;
     }
     return <StyledImage src={url} />;
-};
-
-PanelImage.defaultProps = {
-    url: null,
 };
 
 PanelImage.propTypes = {

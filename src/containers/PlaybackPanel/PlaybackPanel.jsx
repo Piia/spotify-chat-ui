@@ -1,8 +1,7 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { throttle } from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+import throttle from 'lodash/throttle';
 
 import PanelImage from 'components/PanelImage/PanelImage';
 import PlayButton from 'components/PlayButton/PlayButton';
@@ -28,66 +27,49 @@ const RowWrapper = styled.div`
 `;
 RowWrapper.displayName = 'RowWrapper';
 
-class PlaybackPanel extends PureComponent {
-    timerRef = null;
+const PlaybackPanel = () => {
+    const dispatch = useDispatch();
+    const timerRef = React.useRef(null);
 
-    updatePlaybackThrottled = throttle(this.props.updatePlaybackState, 200);
+    const playback = useSelector(state => state.playback.playback);
+    const { currentTrack, isPlaying, timestamp, progressMillis } = playback;
+    const albumUrl = currentTrack ? currentTrack.album.images[0].url : null;
 
-    componentDidUpdate() {
-        const {
-            playback: { currentTrack, isPlaying, timestamp, progressMillis },
-        } = this.props;
-        if (this.timerRef) {
-            clearTimeout(this.timerRef);
+    const updatePlaybackThrottled = throttle(
+        () => dispatch(updatePlaybackState()),
+        200
+    );
+
+    React.useEffect(() => {
+        if (timerRef.current) {
+            clearTimeout(timerRef);
         }
+
         if (
-            !isPlaying ||
-            !currentTrack ||
-            currentTrack.durationMs === undefined
+            isPlaying &&
+            currentTrack &&
+            currentTrack.durationMs !== undefined
         ) {
-            return;
+            const trackShouldEnd =
+                currentTrack.durationMs -
+                (new Date().getTime() - timestamp + progressMillis);
+
+            timerRef.current = setTimeout(
+                updatePlaybackThrottled,
+                trackShouldEnd
+            );
         }
-        const trackShouldEnd =
-            currentTrack.durationMs -
-            (new Date().getTime() - timestamp + progressMillis);
+    }, [playback]); // eslint-disable-line react-hooks/exhaustive-deps
 
-        this.timerRef = setTimeout(
-            this.updatePlaybackThrottled,
-            trackShouldEnd
-        );
-    }
-
-    render() {
-        const {
-            playback: { currentTrack },
-            playback,
-        } = this.props;
-
-        const albumUrl = currentTrack ? currentTrack.album.images[0].url : null;
-
-        return (
-            <Panel>
-                <PanelImage url={albumUrl} />
-                <RowWrapper>
-                    <PlayButton />
-                    <Playback playback={playback} />
-                </RowWrapper>
-            </Panel>
-        );
-    }
-}
-
-PlaybackPanel.propTypes = {
-    playback: PropTypes.object.isRequired,
-    updatePlaybackState: PropTypes.func.isRequired,
+    return (
+        <Panel>
+            <PanelImage url={albumUrl} />
+            <RowWrapper>
+                <PlayButton />
+                <Playback playback={playback} />
+            </RowWrapper>
+        </Panel>
+    );
 };
 
-const mapStateToProps = state => ({
-    playback: state.playback.playback,
-});
-const mapDispatchToProps = dispatch => ({
-    updatePlaybackState: () => dispatch(updatePlaybackState()),
-});
-const connected = connect(mapStateToProps, mapDispatchToProps);
-
-export default connected(PlaybackPanel);
+export default PlaybackPanel;

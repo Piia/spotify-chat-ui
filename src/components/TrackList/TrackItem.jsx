@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -101,59 +101,49 @@ const Item = styled.li`
 `;
 Item.displayName = 'Item';
 
-class TrackItem extends PureComponent {
-    albumTitleElement = null;
+const TrackItem = ({ imageUrl, album, track, artists, onPlay }) => {
+    const albumTitleElement = React.useRef(null);
+    const [artistInfoOverflows, setArtistInfoOverflows] = React.useState(false);
 
-    state = {
-        artistInfoOverflows: false,
-    };
+    React.useEffect(() => {
+        if (albumTitleElement.current) {
+            const childRight = albumTitleElement.current.getBoundingClientRect()
+                .right;
+            const parentRight = albumTitleElement.current.parentNode.getBoundingClientRect()
+                .right;
+            const isOverflowing = childRight > parentRight;
 
-    componentDidMount() {
-        const childRight = this.albumTitleElement.getBoundingClientRect().right;
-        const parentRight = this.albumTitleElement.parentNode.getBoundingClientRect()
-            .right;
-        const isOverflowing = childRight > parentRight;
+            setArtistInfoOverflows(isOverflowing);
+        } else {
+            console.error('albumTitleElement.current is null!');
+        }
+    }, []);
 
-        this.setState({
-            artistInfoOverflows: isOverflowing,
-        });
-    }
-
-    render() {
-        const { imageUrl, album, track, artists, onPlay } = this.props;
-
-        return (
-            <Item hasMarquee={this.state.artistInfoOverflows}>
-                <Image url={imageUrl} width={64} height={64} />
-                <TrackInfo>
-                    <TitleRow>
-                        <Fragment>
+    return (
+        <Item hasMarquee={artistInfoOverflows}>
+            <Image url={imageUrl} width={64} height={64} />
+            <TrackInfo>
+                <TitleRow>
+                    <>
+                        <TrackTitle>{track}</TrackTitle>
+                        <AlbumTitle ref={albumTitleElement}>
+                            {' '}
+                            - {album}
+                        </AlbumTitle>
+                    </>
+                    {artistInfoOverflows ? (
+                        <>
                             <TrackTitle>{track}</TrackTitle>
-                            <AlbumTitle
-                                ref={el => {
-                                    this.albumTitleElement = el;
-                                }}
-                            >
-                                {' '}
-                                - {album}
-                            </AlbumTitle>
-                        </Fragment>
-                        {this.state.artistInfoOverflows ? (
-                            <Fragment>
-                                <TrackTitle>{track}</TrackTitle>
-                                <AlbumTitle> - {album}</AlbumTitle>
-                            </Fragment>
-                        ) : null}
-                    </TitleRow>
-                    <ArtistInfo>{artists.join(', ')}</ArtistInfo>
-                </TrackInfo>
-                {typeof onPlay === 'function' && (
-                    <PlayButton onClick={onPlay} />
-                )}
-            </Item>
-        );
-    }
-}
+                            <AlbumTitle> - {album}</AlbumTitle>
+                        </>
+                    ) : null}
+                </TitleRow>
+                <ArtistInfo>{artists.join(', ')}</ArtistInfo>
+            </TrackInfo>
+            {typeof onPlay === 'function' && <PlayButton onClick={onPlay} />}
+        </Item>
+    );
+};
 
 TrackItem.defaultProps = {
     imageUrl: null,

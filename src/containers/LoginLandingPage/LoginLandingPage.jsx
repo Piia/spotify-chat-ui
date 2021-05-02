@@ -1,33 +1,27 @@
-import React, { PureComponent } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import SpinnerPage from 'components/Spinner/SpinnerPage';
 import { login } from 'redux/login/login';
 
-export class LoginLandingPage extends PureComponent {
-    componentDidMount() {
-        const { login, authorizationCode, history } = this.props;
+const LoginLandingPage = ({ authorizationCode }) => {
+    const dispatch = useDispatch();
+    const history = useHistory();
 
-        login(authorizationCode).then(() => {
+    React.useEffect(() => {
+        dispatch(login(authorizationCode)).then(() => {
             const mainPageUrl = '/chat';
             history.push(mainPageUrl);
         });
-    }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    render() {
-        return <SpinnerPage />;
-    }
-}
-
-LoginLandingPage.propTypes = {
-    login: PropTypes.func.isRequired,
-    authorizationCode: PropTypes.string.isRequired,
-    history: PropTypes.object.isRequired,
+    return <SpinnerPage />;
 };
 
-const mapDispatchToProps = dispatch => ({
-    login: authorizationCode => dispatch(login(authorizationCode)),
-});
+LoginLandingPage.propTypes = {
+    authorizationCode: PropTypes.string.isRequired,
+};
 
-export default connect(null, mapDispatchToProps)(withRouter(LoginLandingPage));
+export default LoginLandingPage;

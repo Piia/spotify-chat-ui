@@ -28,8 +28,8 @@ const SearchInput = ({
     property,
     onChange,
     onKeyPress,
-    placeholder,
-    disabled,
+    placeholder = '...',
+    disabled = false,
 }) => {
     return (
         <Input
@@ -41,12 +41,6 @@ const SearchInput = ({
             spellCheck="false"
         />
     );
-};
-
-SearchInput.defaultProps = {
-    placeholder: '...',
-    disabled: false,
-    onKeyPress: undefined,
 };
 
 SearchInput.propTypes = {

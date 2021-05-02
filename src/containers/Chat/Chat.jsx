@@ -1,9 +1,12 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import ChatMessage from 'components/Chat/ChatMessage';
 import ChatSubscriber from 'components/Chat/ChatSubscriber';
 import withChatClient from 'components/withChatClient/withChatClient';
+import ChatInput from './ChatInput';
 
 const MessageContainer = styled.article`
     padding: ${props => props.theme.spacing.xs};
@@ -34,154 +37,44 @@ ChatterList.displayName = 'ChatterList';
 const ChatterListHeading = styled.h3``;
 ChatterListHeading.displayName = 'ChatterListHeading';
 
-const InputTextArea = styled.textarea`
-    height: 5rem;
-    max-height: 5rem;
-    min-height: 5rem;
-    resize: none;
-    padding: ${props => props.theme.spacing.xs};
-    box-sizing: border-box;
-    background-color: ${props => props.theme.colors.outerSpace};
-    color: ${props => props.theme.colors.magnolia};
-    width: 100%;
-    border: 1px solid ${props => props.theme.colors.black};
-
-    &:focus {
-        outline: none;
-    }
-`;
-InputTextArea.displayName = 'InputTextArea';
-
-const SubmitButton = styled.button`
-    height: 5rem;
-    width: 7rem;
-    background-color: ${props => props.theme.colors.outerSpace};
-    border: 1px solid ${props => props.theme.colors.black};
-    border-left-width: 0;
-    color: ${props => props.theme.colors.varden};
-    font-family: ${props => props.theme.font.family.verdana};
-    font-size: ${props => props.theme.font.size.sm};
-    font-weight: ${props => props.theme.font.weight.bold};
-    font-stretch: normal;
-    text-transform: uppercase;
-
-    &:hover {
-        color: ${props => props.theme.colors.leather};
-        cursor: pointer;
-    }
-`;
-SubmitButton.displayName = 'SubmitButton';
-
-const Container = styled.section`
-    padding-right: ${props => props.theme.spacing.md};
-    height: 7rem;
-    display: flex;
-    align-items: center;
-`;
-Container.displayName = 'Container';
-
-const ChatTextArea = ({
-    model,
-    property,
-    onChange,
-    onKeyPress,
-    placeholder,
-    disabled,
-}) => {
-    return (
-        <InputTextArea
-            value={model && property && model[property]}
-            onChange={event => onChange(property, event.target.value)}
-            onKeyPress={onKeyPress}
-            placeholder={placeholder}
-            disabled={disabled}
-            spellCheck="false"
-        />
-    );
-};
-
-class ChatInput extends PureComponent {
-    state = {
-        model: {},
-    };
-
-    property = 'chatMessage';
-
-    handleInputChange = (property, value) => {
-        this.setState(oldState => ({
-            model: { ...oldState.model, [property]: value },
-        }));
-    };
-
-    submitMessage = () => {
-        const chatMessage = this.state.model[this.property];
-
-        if (chatMessage && chatMessage.length > 0) {
-            this.setState(oldState => ({
-                model: { ...oldState.model, [this.property]: '' },
-            }));
-            this.props.sendChatMessage(chatMessage);
-        }
-    };
-
-    render() {
-        return (
-            <Container>
-                <ChatTextArea
-                    onChange={this.handleInputChange}
-                    property={this.property}
-                    model={this.state.model}
-                />
-                <SubmitButton onClick={this.submitMessage}>Send</SubmitButton>
-            </Container>
-        );
-    }
-}
-
 const HorizontalWrapper = styled.section`
     height: calc(100% - 7rem);
     display: flex;
 `;
 HorizontalWrapper.displayName = 'HorizontalWrapper';
 
-class Chat extends PureComponent {
-    messageContainerElement = null;
+const Chat = ({ sendChatMessage }) => {
+    const chatMessages = useSelector(state => state.chat.messages);
+    const chatters = useSelector(state => state.chat.chatters);
+    const messageContainerElement = React.useRef(null);
 
-    componentDidUpdate() {
-        this.messageContainerElement.scrollTop = this.messageContainerElement.scrollHeight;
+    if (messageContainerElement.current) {
+        messageContainerElement.current.scrollTop =
+            messageContainerElement.current.scrollHeight;
     }
 
-    render() {
-        return (
-            <ChatSection>
-                <HorizontalWrapper>
-                    <MessageContainer
-                        ref={elem => {
-                            this.messageContainerElement = elem;
-                        }}
-                    >
-                        {this.props.chatMessages.map(message => (
-                            <ChatMessage message={message} key={message.id} />
-                        ))}
-                    </MessageContainer>
-                    <ChatterList>
-                        <ChatterListHeading>Listeners</ChatterListHeading>
-                        {this.props.chatters.map(chatter => (
-                            <ChatSubscriber chatter={{ chatter }} />
-                        ))}
-                    </ChatterList>
-                </HorizontalWrapper>
-                <ChatInput sendChatMessage={this.props.sendChatMessage} />
-            </ChatSection>
-        );
-    }
-}
+    return (
+        <ChatSection>
+            <HorizontalWrapper>
+                <MessageContainer ref={messageContainerElement}>
+                    {chatMessages.map(message => (
+                        <ChatMessage message={message} key={message.id} />
+                    ))}
+                </MessageContainer>
+                <ChatterList>
+                    <ChatterListHeading>Listeners</ChatterListHeading>
+                    {chatters.map(chatter => (
+                        <ChatSubscriber chatter={chatter} key={chatter} />
+                    ))}
+                </ChatterList>
+            </HorizontalWrapper>
+            <ChatInput sendChatMessage={sendChatMessage} />
+        </ChatSection>
+    );
+};
 
-const mapStateToProps = state => ({
-    chatMessages: state.chat.messages,
-    chatters: state.chat.chatters,
-});
+Chat.propTypes = {
+    sendChatMessage: PropTypes.func.isRequired,
+};
 
-const connector = connect(mapStateToProps);
-
-export default withChatClient(connector(Chat));
+export default withChatClient(Chat);

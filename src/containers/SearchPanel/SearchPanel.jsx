@@ -1,7 +1,6 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import SearchResult from 'components/SearchResult/SearchResult';
 import SearchBar from 'components/SearchBar/SearchBar';
@@ -15,43 +14,34 @@ const Panel = styled.aside`
 `;
 Panel.displayName = 'Panel';
 
-class SearchPanel extends PureComponent {
-    render() {
-        const { tracks, loading, error, playTrack, searchTracks } = this.props;
+const SearchPanel = () => {
+    const dispatch = useDispatch();
 
-        return (
-            <Panel>
-                <SearchBar onSearch={searchTracks} />
-                <SearchResult
-                    tracks={tracks}
-                    onPlay={playTrack}
-                    loading={loading}
-                    error={error}
-                />
-            </Panel>
-        );
-    }
-}
+    const tracks = useSelector(state => state.search.tracks);
+    const loading = useSelector(state => state.search.loading);
+    const error = useSelector(state => state.search.error);
 
-SearchPanel.propTypes = {
-    tracks: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired,
-    error: PropTypes.object.isRequired,
-    searchTracks: PropTypes.func.isRequired,
-    playTrack: PropTypes.func.isRequired,
+    const handleSearch = React.useCallback(
+        trackName => dispatch(searchTracks(trackName)),
+        [dispatch]
+    );
+
+    const handlePlayTrack = React.useCallback(
+        track => dispatch(playTrack(track)),
+        [dispatch]
+    );
+
+    return (
+        <Panel>
+            <SearchBar onSearch={handleSearch} />
+            <SearchResult
+                tracks={tracks}
+                onPlay={handlePlayTrack}
+                loading={loading}
+                error={error}
+            />
+        </Panel>
+    );
 };
 
-const mapStateToProps = state => ({
-    tracks: state.search.tracks,
-    loading: state.search.loading,
-    error: state.search.error,
-});
-
-const mapDispatchToProps = dispatch => ({
-    searchTracks: trackName => dispatch(searchTracks(trackName)),
-    playTrack: track => dispatch(playTrack(track)),
-});
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(SearchPanel);
+export default SearchPanel;

@@ -1,7 +1,5 @@
-import React, { PureComponent, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import Chat from 'containers/Chat/Chat';
@@ -24,36 +22,26 @@ const Wrapper = styled.div`
 `;
 Wrapper.displayName = 'Wrapper';
 
-export class MainPage extends PureComponent {
-    componentDidMount() {
-        this.props.loadProfile();
-        this.props.updatePlaybackState();
-    }
+const MainPage = () => {
+    const dispatch = useDispatch();
 
-    render() {
-        return (
-            <Fragment>
-                <NavBar />
-                <MainContent>
-                    <SearchPanel />
-                    <Wrapper>
-                        <PlaybackPanel />
-                        <Chat />
-                    </Wrapper>
-                </MainContent>
-            </Fragment>
-        );
-    }
-}
+    React.useEffect(() => {
+        dispatch(loadProfile());
+        dispatch(updatePlaybackState());
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-MainPage.propTypes = {
-    loadProfile: PropTypes.func.isRequired,
+    return (
+        <>
+            <NavBar />
+            <MainContent>
+                <SearchPanel />
+                <Wrapper>
+                    <PlaybackPanel />
+                    <Chat />
+                </Wrapper>
+            </MainContent>
+        </>
+    );
 };
 
-const mapDispatchToProps = dispatch => ({
-    loadProfile: () => dispatch(loadProfile()),
-    updatePlaybackState: () => dispatch(updatePlaybackState()),
-});
-const connector = connect(null, mapDispatchToProps);
-
-export default connector(withRouter(MainPage));
+export default MainPage;

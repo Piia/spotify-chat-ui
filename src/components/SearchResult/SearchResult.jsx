@@ -16,7 +16,7 @@ const SearchResult = ({ tracks, loading, onPlay, error }) => {
         );
     }
     if (error && Object.keys(error).length > 0) {
-        console.log(error);
+        console.error(error);
         return (
             <TrackList>
                 <ErrorPage message={error.message || error} />

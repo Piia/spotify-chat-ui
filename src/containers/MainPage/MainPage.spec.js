@@ -1,18 +1,27 @@
 import React from 'react';
-import { MainPage } from './MainPage';
+import MainPage from './MainPage';
 import NavBar from 'containers/NavBar/NavBar';
 import Chat from 'containers/Chat/Chat';
 import SearchPanel from 'containers/SearchPanel/SearchPanel';
+
+jest.mock('react-redux', () => ({
+    useDispatch: () => () => {},
+    connect: () => comp => comp,
+}));
+
+jest.mock('redux/profile/profile', () => ({
+    loadProfile: () => {},
+}));
+
+jest.mock('redux/playback/playback', () => ({
+    updatePlaybackState: () => {},
+}));
 
 describe('MainPage', () => {
     let component, props;
 
     beforeEach(() => {
-        props = {
-            loggedIn: false,
-            loadProfile: () => {},
-            updatePlaybackState: () => {},
-        };
+        props = {};
         component = shallow(<MainPage {...props} />);
     });
 

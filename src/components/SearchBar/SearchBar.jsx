@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import SearchInput from 'components/Inputs/SearchInput';
@@ -36,47 +36,41 @@ const Search = styled.span`
 `;
 Search.displayName = 'Search';
 
-class SearchBar extends PureComponent {
-    state = {
-        model: {},
+export const PROPERTY_NAME = 'trackName';
+
+const SearchBar = ({ onSearch }) => {
+    const [model, setModel] = React.useState({});
+
+    const handleInputChange = (property, value) => {
+        setModel(oldModel => ({ ...oldModel, [property]: value }));
     };
 
-    property = 'trackName';
-
-    handleInputChange = (property, value) => {
-        this.setState(oldState => ({
-            model: { ...oldState.model, [property]: value },
-        }));
-    };
-
-    handleKeyPress = event => {
-        if (event && event.key === 'Enter') {
-            this.submitSearch();
-        }
-    };
-
-    submitSearch = () => {
-        const searchWord = this.state.model[this.property];
+    const submitSearch = () => {
+        const searchWord = model[PROPERTY_NAME];
         if (searchWord && searchWord.length > 0) {
-            this.props.onSearch(searchWord);
+            onSearch(searchWord);
         }
     };
 
-    render() {
-        return (
-            <Bar>
-                <SearchInput
-                    onChange={this.handleInputChange}
-                    onKeyPress={this.handleKeyPress}
-                    property={this.property}
-                    model={this.state.model}
-                    placeholder="Search tracks"
-                />
-                <Search onClick={this.submitSearch}>Search</Search>
-            </Bar>
-        );
-    }
-}
+    const handleKeyPress = event => {
+        if (event && event.key === 'Enter') {
+            submitSearch();
+        }
+    };
+
+    return (
+        <Bar>
+            <SearchInput
+                onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
+                property={PROPERTY_NAME}
+                model={model}
+                placeholder="Search tracks"
+            />
+            <Search onClick={submitSearch}>Search</Search>
+        </Bar>
+    );
+};
 
 SearchBar.propTypes = {
     onSearch: PropTypes.func.isRequired,
