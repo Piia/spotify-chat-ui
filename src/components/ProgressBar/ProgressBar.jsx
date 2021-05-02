@@ -47,12 +47,16 @@ const getRemainingPlayBackTimeMillis = playback => {
     }
 
     const songDuration = currentTrack.durationMs;
-    const playbackPercentage = this.getPlaybackPercentage();
+    const playbackPercentage = getPlaybackPercentage(playback);
     return (1 - playbackPercentage) * songDuration;
 };
 
+const EMPTY_OBJECT = {};
+
 const ProgressBar = () => {
-    const playback = useSelector(state => state.playback.playback);
+    const playback = useSelector(
+        state => state.playback.playback || EMPTY_OBJECT
+    );
 
     const { initialWidth, animationTime } = React.useMemo(
         () => ({

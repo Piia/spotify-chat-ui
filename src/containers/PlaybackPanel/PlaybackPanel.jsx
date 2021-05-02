@@ -36,7 +36,7 @@ const PlaybackPanel = () => {
     const albumUrl = currentTrack ? currentTrack.album.images[0].url : null;
 
     const updatePlaybackThrottled = throttle(
-        dispatch(updatePlaybackState()),
+        () => dispatch(updatePlaybackState()),
         200
     );
 
