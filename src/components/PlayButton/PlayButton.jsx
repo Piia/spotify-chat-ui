@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { resume, pause } from 'redux/playback/playback';
+import { resume, pause } from 'store/playback/playback';
 
 const Button = styled.button`
     display: inline-flex;

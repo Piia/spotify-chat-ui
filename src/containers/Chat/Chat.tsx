@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
+import { ChatMessage as MessageType } from 'components/Chat/Chat.types';
 import ChatMessage from 'components/Chat/ChatMessage';
 import ChatSubscriber from 'components/Chat/ChatSubscriber';
 import withChatClient from 'components/withChatClient/withChatClient';
 import ChatInput from './ChatInput';
+import { RootState } from 'store';
+
+type ChatProps = {
+    sendChatMessage: (message: MessageType) => void;
+};
 
 const MessageContainer = styled.article`
     padding: ${props => props.theme.spacing.xs};
@@ -43,10 +49,10 @@ const HorizontalWrapper = styled.section`
 `;
 HorizontalWrapper.displayName = 'HorizontalWrapper';
 
-const Chat = ({ sendChatMessage }) => {
-    const chatMessages = useSelector(state => state.chat.messages);
-    const chatters = useSelector(state => state.chat.chatters);
-    const messageContainerElement = React.useRef(null);
+const Chat: FC<ChatProps> = ({ sendChatMessage }) => {
+    const chatMessages = useSelector((state: RootState) => state.chat.messages);
+    const chatters = useSelector((state: RootState) => state.chat.chatters);
+    const messageContainerElement = React.useRef<HTMLElement>(null);
 
     if (messageContainerElement.current) {
         messageContainerElement.current.scrollTop =

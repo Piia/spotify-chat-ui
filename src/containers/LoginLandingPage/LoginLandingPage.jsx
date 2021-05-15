@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import SpinnerPage from 'components/Spinner/SpinnerPage';
-import { login } from 'redux/login/login';
+import { login } from 'store/login/login';
 
 const LoginLandingPage = ({ authorizationCode }) => {
     const dispatch = useDispatch();

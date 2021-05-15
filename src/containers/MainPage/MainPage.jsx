@@ -6,8 +6,8 @@ import Chat from 'containers/Chat/Chat';
 import NavBar from 'containers/NavBar/NavBar';
 import SearchPanel from 'containers/SearchPanel/SearchPanel';
 
-import { loadProfile } from 'redux/profile/profile';
-import { updatePlaybackState } from 'redux/playback/playback';
+import { loadProfile } from 'store/profile/profile';
+import { updatePlaybackState } from 'store/playback/playback';
 import PlaybackPanel from 'containers/PlaybackPanel/PlaybackPanel';
 
 const MainContent = styled.section`

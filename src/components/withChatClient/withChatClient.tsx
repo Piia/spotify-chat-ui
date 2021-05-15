@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { ComponentType, FC } from 'react';
 
+import { ChatMessage as MessageType } from 'components/Chat/Chat.types';
 import useChatClient from './useChatClient';
 
-const withChatClient = WrappedComponent => {
-    const ChatClient = props => {
+export type SendChatMessage = (message: MessageType) => void;
+
+type AdditionalProps = {
+    sendChatMessage: SendChatMessage;
+};
+
+function withChatClient<P>(
+    WrappedComponent: ComponentType<P & AdditionalProps>
+): FC<P> {
+    const ChatClient = (props: P) => {
         const [sendChatMessage, ClientComponent] = useChatClient();
 
         return (
@@ -18,6 +27,6 @@ const withChatClient = WrappedComponent => {
     };
 
     return ChatClient;
-};
+}
 
 export default withChatClient;

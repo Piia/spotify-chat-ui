@@ -6,7 +6,7 @@ import throttle from 'lodash/throttle';
 import PanelImage from 'components/PanelImage/PanelImage';
 import PlayButton from 'components/PlayButton/PlayButton';
 import Playback from 'components/Playback/Playback';
-import { updatePlaybackState } from 'redux/playback/playback';
+import { updatePlaybackState } from 'store/playback/playback';
 
 const Panel = styled.section`
     background-color: ${props => props.theme.colors.cosmic};

@@ -1,11 +1,11 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
-import { loginReducer } from 'redux/login/login';
-import { profileReducer } from 'redux/profile/profile';
-import { searchReducer } from 'redux/search/search';
-import { playbackReducer } from 'redux/playback/playback';
-import { chatReducer } from 'redux/chat/chat';
+import { loginReducer } from 'store/login/login';
+import { profileReducer } from 'store/profile/profile';
+import { searchReducer } from 'store/search/search';
+import { playbackReducer } from 'store/playback/playback';
+import { chatReducer } from 'store/chat/chat';
 
 const rootReducer = combineReducers({
     login: loginReducer,
@@ -14,5 +14,7 @@ const rootReducer = combineReducers({
     playback: playbackReducer,
     chat: chatReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));
