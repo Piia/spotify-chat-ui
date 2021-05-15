@@ -82,7 +82,6 @@ export const getChatters = (trackId: string) => {
 };
 
 export const addChatter = (userId: string) => {
-    console.log('adding chatter');
     return (dispatch: Dispatch<AddChatterAction>) => {
         dispatch({
             type: ChatActions.CHATTER_JOINED,

@@ -97,8 +97,6 @@ export const refreshAccessToken = () => {
 };
 
 export const loginReducer = (state = initialState, action: LoginAction) => {
-    console.log(action);
-
     switch (action.type) {
         case LoginActionTypes.LOG_IN_SUCCESS:
             return {
