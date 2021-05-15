@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkLogin, refreshAccessToken } from 'redux/login/login';
+import { checkLogin, refreshAccessToken } from 'store/login/login';
 import SpinnerPage from 'components/Spinner/SpinnerPage';
 
 // refresh every 15 minutes

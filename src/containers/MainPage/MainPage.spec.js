@@ -9,11 +9,11 @@ jest.mock('react-redux', () => ({
     connect: () => comp => comp,
 }));
 
-jest.mock('redux/profile/profile', () => ({
+jest.mock('store/profile/profile', () => ({
     loadProfile: () => {},
 }));
 
-jest.mock('redux/playback/playback', () => ({
+jest.mock('store/playback/playback', () => ({
     updatePlaybackState: () => {},
 }));
 

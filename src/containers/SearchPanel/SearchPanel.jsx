@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import SearchResult from 'components/SearchResult/SearchResult';
 import SearchBar from 'components/SearchBar/SearchBar';
 
-import { searchTracks } from 'redux/search/search';
-import { playTrack } from 'redux/playback/playback';
+import { searchTracks } from 'store/search/search';
+import { playTrack } from 'store/playback/playback';
 
 const Panel = styled.aside`
     flex-flow: column nowrap;

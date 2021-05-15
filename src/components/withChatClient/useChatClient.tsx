@@ -1,4 +1,5 @@
 import React from 'react';
+import { RootState } from 'store';
 
 import { useDispatch, useSelector } from 'react-redux';
 import SockJsClient from 'react-stomp';
@@ -8,7 +9,9 @@ import {
     getChatters,
     addChatter,
     removeChatter,
-} from 'redux/chat/chat';
+} from 'store/chat/chat';
+
+import { SendChatMessage } from './withChatClient';
 
 const CHAT_URL = `${process.env.REACT_APP_BACKEND_BASEPATH}/chat`;
 
@@ -18,11 +21,15 @@ const EVENT_TYPE = {
     DISCONNECT: 'DISCONNECT',
 };
 
-const useChatClient = () => {
-    const clientRef = React.useRef();
+const useChatClient: () => [SendChatMessage, () => JSX.Element] = () => {
+    type refType = HTMLElement & {
+        sendMessage: (path: string, payload: string) => void;
+    };
+
+    const clientRef = React.useRef<refType>();
 
     const trackId = useSelector(
-        state => state.playback.playback?.currentTrack?.id
+        (state: RootState) => state.playback.playback.currentTrack?.id
     );
 
     const chatTopics = React.useMemo(
@@ -44,12 +51,10 @@ const useChatClient = () => {
 
     const sendChatMessage = React.useCallback(
         message => {
-            if (trackId && clientRef.current) {
-                clientRef.current.sendMessage(
-                    `/app/chat/${trackId}`,
-                    JSON.stringify({ body: message })
-                );
-            }
+            clientRef.current?.sendMessage(
+                `/app/chat/${trackId}`,
+                JSON.stringify({ body: message })
+            );
         },
         [trackId]
     );
