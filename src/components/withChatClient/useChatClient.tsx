@@ -51,12 +51,10 @@ const useChatClient: () => [SendChatMessage, () => JSX.Element] = () => {
 
     const sendChatMessage = React.useCallback(
         message => {
-            if (trackId && clientRef.current) {
-                clientRef.current?.sendMessage(
-                    `/app/chat/${trackId}`,
-                    JSON.stringify({ body: message })
-                );
-            }
+            clientRef.current?.sendMessage(
+                `/app/chat/${trackId}`,
+                JSON.stringify({ body: message })
+            );
         },
         [trackId]
     );
