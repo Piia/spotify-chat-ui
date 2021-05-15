@@ -11,7 +11,7 @@ const ErrorText = styled.p`
 ErrorText.displayName = 'ErrorText';
 
 type ErrorPageProps = {
-    message: string;
+    message?: string;
 };
 
 const ErrorPage: FC<ErrorPageProps> = ({
