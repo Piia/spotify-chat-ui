@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { FC } from 'react';
 import styled from 'styled-components';
 
 const ErrorText = styled.p`
@@ -11,14 +10,12 @@ const ErrorText = styled.p`
 `;
 ErrorText.displayName = 'ErrorText';
 
-const ErrorPage = ({ message }) => <ErrorText>{message}</ErrorText>;
-
-ErrorPage.defaultProps = {
-    message: 'Something went wrong',
+type ErrorPageProps = {
+    message?: string;
 };
 
-ErrorPage.propTypes = {
-    message: PropTypes.string,
-};
+const ErrorPage: FC<ErrorPageProps> = ({
+    message = 'Something went wrong',
+}) => <ErrorText>{message}</ErrorText>;
 
 export default ErrorPage;

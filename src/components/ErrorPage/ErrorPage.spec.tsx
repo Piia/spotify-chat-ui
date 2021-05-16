@@ -1,8 +1,9 @@
 import React from 'react';
 import ErrorPage from './ErrorPage';
+import { shallow, ShallowWrapper } from 'enzyme';
 
 describe('ErrorPage', () => {
-    let component;
+    let component: ShallowWrapper<any, any, any>;
     beforeEach(() => {
         component = shallow(<ErrorPage />);
     });
